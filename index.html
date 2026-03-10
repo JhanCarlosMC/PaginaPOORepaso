@@ -619,6 +619,7 @@
             <a href="#encapsulamiento">🔒 Encapsulamiento</a>
             <a href="#constructor">⚙️ Constructor</a>
             <a href="#gets-sets">📥 Get/Set</a>
+            <a href="#tostring">📝 toString</a>
             <a href="#enums">📋 Enums</a>
             <a href="#crud">🔄 CRUD</a>
             <a href="#diagramas">📊 Diagramas</a>
@@ -948,6 +949,248 @@ System.out.println(est.<span class="method">getPromedio</span>());  <span class=
                     <strong>💡 Ventaja:</strong> Los métodos <code>set</code> permiten validar los datos antes de asignarlos,
                     manteniendo la integridad del objeto. Los métodos <code>get</code> permiten leer los datos
                     sin modificarlos.
+                </div>
+            </div>
+
+            <!-- toString -->
+            <div class="concept" id="tostring">
+                <h2>toString</h2>
+                <p>
+                    El método <strong>toString()</strong> es un método especial de Java que devuelve una representación
+                    en forma de texto de un objeto. Todos los objetos en Java tienen este método porque heredan
+                    de la clase <code>Object</code>.
+                </p>
+
+                <div class="benefits">
+                    <div class="benefit-card">
+                        <h4>📖 Representación legible</h4>
+                        <p>Convierte un objeto a texto para mostrar información importante.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>🔍 Debugging</h4>
+                        <p>Facilita ver el contenido de un objeto al depurar código.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>📤 Logging</h4>
+                        <p>Permite registrar objetos en sistemas de logs de forma clara.</p>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h3>¿Qué hace toString() por defecto?</h3>
+                    <p>Si no sobrescribes toString(), Java muestra: <code>NombreClase@hexadecimal</code></p>
+                </div>
+
+                <div class="code-block"><code><span class="comment">// ================== SIN toString() ==================</span>
+<span class="keyword">public class</span> <span class="type">Estudiante</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private int</span> edad;
+
+    <span class="keyword">public</span> <span class="type">Estudiante</span>(String nombre, <span class="keyword">int</span> edad) {
+        <span class="keyword">this</span>.nombre = nombre;
+        <span class="keyword">this</span>.edad = edad;
+    }
+}
+
+<span class="comment">// Uso sin toString</span>
+<span class="type">Estudiante</span> est = <span class="keyword">new</span> <span class="type">Estudiante</span>(<span class="string">"Ana"</span>, <span class="number">20</span>);
+System.out.println(est);  <span class="comment">// Output: Estudiante@15db9742 (no es legible)</span>
+
+<span class="comment">// ================== CON toString() ==================</span>
+<span class="keyword">public class</span> <span class="type">Estudiante</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private int</span> edad;
+
+    <span class="keyword">public</span> <span class="type">Estudiante</span>(String nombre, <span class="keyword">int</span> edad) {
+        <span class="keyword">this</span>.nombre = nombre;
+        <span class="keyword">this</span>.edad = edad;
+    }
+
+    <span class="comment">// Sobrescribir toString()</span>
+    @Override
+    <span class="keyword">public</span> String <span class="method">toString</span>() {
+        <span class="keyword">return</span> <span class="string">"Estudiante{nombre='"</span> + nombre + <span class="string">"', edad="</span> + edad + <span class="string">"}"</span>;
+    }
+}
+
+<span class="comment">// Uso con toString</span>
+<span class="type">Estudiante</span> est = <span class="keyword">new</span> <span class="type">Estudiante</span>(<span class="string">"Ana"</span>, <span class="number">20</span>);
+System.out.println(est);  <span class="comment">// Output: Estudiante{nombre='Ana', edad=20}</span></code></div>
+
+                <div class="tip">
+                    <strong>💡 @Override:</strong> Esta anotación le dice a Java que estás sobrescribiendo un método
+                    de la clase padre (Object). Es una buena práctica usarla.
+                </div>
+
+                <div class="example">
+                    <h3>Formatos comunes de toString()</h3>
+                    <p>No hay una regla estricta, pero estos son los formatos más usados:</p>
+                </div>
+
+                <div class="code-block"><code><span class="comment">// ================== FORMATO 1: Estilo Clases de Java ==================</span>
+@Override
+<span class="keyword">public</span> String <span class="method">toString</span>() {
+    <span class="keyword">return</span> <span class="string">"Clase{campo1='"</span> + campo1 + <span class="string">"', campo2="</span> + campo2 + <span class="string">"}"</span>;
+}
+<span class="comment">// Output: Persona{nombre='Juan', edad=25}</span>
+
+<span class="comment">// ================== FORMATO 2: Descriptivo ==================</span>
+@ Override
+<span class="keyword">public</span> String <span class="method">toString</span>() {
+    <span class="keyword">return</span> nombre + <span class="string">" ("</span> + edad + <span class="string">" años)"</span>;
+}
+<span class="comment">// Output: Juan (25 años)</span>
+
+<span class="comment">// ================== FORMATO 3: Con salto de línea ==================</span>
+@Override
+<span class="keyword">public</span> String <span class="method">toString</span>() {
+    <span class="keyword">return</span> <span class="string">"Producto:\n"</span> +
+           <span class="string">"  Código: "</span> + codigo + <span class="string">"\n"</span> +
+           <span class="string">"  Nombre: "</span> + nombre + <span class="string">"\n"</span> +
+           <span class="string">"  Precio: $"</span> + precio;
+}
+<span class="comment">// Output:</span>
+<span class="comment">// Producto:</span>
+<span class="comment">//   Código: 1</span>
+<span class="comment">//   Nombre: Laptop</span>
+<span class="comment">//   Precio: $999.99</span></code></div>
+
+                <div class="example">
+                    <h3>Ejemplo completo con toString()</h3>
+                </div>
+
+                <div class="code-block"><code><span class="keyword">public class</span> <span class="type">Libro</span> {
+
+    <span class="keyword">private</span> String titulo;
+    <span class="keyword">private</span> String autor;
+    <span class="keyword">private int</span> anioPublicacion;
+    <span class="keyword">private double</span> precio;
+
+    <span class="comment">// Constructor completo</span>
+    <span class="keyword">public</span> <span class="type">Libro</span>(String titulo, String autor, <span class="keyword">int</span> anioPublicacion, <span class="keyword">double</span> precio) {
+        <span class="keyword">this</span>.titulo = titulo;
+        <span class="keyword">this</span>.autor = autor;
+        <span class="keyword">this</span>.anioPublicacion = anioPublicacion;
+        <span class="keyword">this</span>.precio = precio;
+    }
+
+    <span class="comment">// Getters</span>
+    <span class="keyword">public</span> String <span class="method">getTitulo</span>() { <span class="keyword">return</span> titulo; }
+    <span class="keyword">public</span> String <span class="method">getAutor</span>() { <span class="keyword">return</span> autor; }
+    <span class="keyword">public int</span> <span class="method">getAnio</span>() { <span class="keyword">return</span> anioPublicacion; }
+    <span class="keyword">public double</span> <span class="method">getPrecio</span>() { <span class="keyword">return</span> precio; }
+
+    <span class="comment">// Método toString()</span>
+    @Override
+    <span class="keyword">public</span> String <span class="method">toString</span>() {
+        <span class="keyword">return</span> <span class="string">"Libro{"</span> +
+               <span class="string">"titulo='"</span> + titulo + <span class="string">"', "</span> +
+               <span class="string">"autor='"</span> + autor + <span class="string">"', "</span> +
+               <span class="string">"anio="</span> + anioPublicacion + <span class="string">", "</span> +
+               <span class="string">"precio=$"</span> + precio + <span class="string">"}"</span>;
+    }
+}
+
+<span class="comment">// ================== USO DE toString() ==================</span>
+<span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+
+    <span class="type">Libro</span> libro = <span class="keyword">new</span> <span class="type">Libro</span>(<span class="string">"El Principito"</span>, <span class="string">"Antoine de Saint-Exupéry"</span>, <span class="number">1943</span>, <span class="number">15.99</span>);
+
+    <span class="comment">// toString() se llama automáticamente con println</span>
+    System.out.println(libro);
+    <span class="comment">// Output: Libro{titulo='El Principito', autor='Antoine de Saint-Exupéry', anio=1943, precio=$15.99}</span>
+
+    <span class="comment">// Concatenación con strings</span>
+    String mensaje = <span class="string">"Libro disponible: "</span> + libro;
+    System.out.println(mensaje);
+
+    <span class="comment">// En JOptionPane</span>
+    <span class="type">JOptionPane</span>.showMessageDialog(null, libro.toString());
+
+    <span class="comment">// Con arreglos</span>
+    <span class="type">Libro</span>[] biblioteca = <span class="keyword">new</span> <span class="type">Libro</span>[<span class="number">3</span>];
+    biblioteca[<span class="number">0</span>] = libro;
+    System.out.println(<span class="type">Arrays</span>.toString(biblioteca));
+}</code></div>
+
+                <div class="warning">
+                    ⚠️ <strong>Importante:</strong> toString() debe devolver una representación ÚTIL del objeto,
+                    no solo los datos. Incluye la información más importante para identificar el objeto.
+                </div>
+
+                <div class="example">
+                    <h3>toString() con objetos relacionados</h3>
+                    <p>Cuando un objeto tiene otros objetos dentro, también llama a sus toString():</p>
+                </div>
+
+                <div class="code-block"><code><span class="keyword">public class</span> <span class="type">Direccion</span> {
+    <span class="keyword">private</span> String calle;
+    <span class="keyword">private int</span> numero;
+    <span class="keyword">private</span> String ciudad;
+
+    <span class="keyword">public</span> <span class="type">Direccion</span>(String calle, <span class="keyword">int</span> numero, String ciudad) {
+        <span class="keyword">this</span>.calle = calle;
+        <span class="keyword">this</span>.numero = numero;
+        <span class="keyword">this</span>.ciudad = ciudad;
+    }
+
+    @Override
+    <span class="keyword">public</span> String <span class="method">toString</span>() {
+        <span class="keyword">return</span> calle + <span class="string">" "</span> + numero + <span class="string">", "</span> + ciudad;
+    }
+}
+
+<span class="keyword">public class</span> <span class="type">Persona</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private</span> <span class="type">Direccion</span> direccion;  <span class="comment">// Objeto relacionado</span>
+
+    <span class="keyword">public</span> <span class="type">Persona</span>(String nombre, <span class="type">Direccion</span> direccion) {
+        <span class="keyword">this</span>.nombre = nombre;
+        <span class="keyword">this</span>.direccion = direccion;
+    }
+
+    @Override
+    <span class="keyword">public</span> String <span class="method">toString</span>() {
+        <span class="comment">// Llama al toString() de Direccion</span>
+        <span class="keyword">return</span> <span class="string">"Persona{nombre='"</span> + nombre + <span class="string">"', direccion="</span> + direccion + <span class="string">"}"</span>;
+    }
+}
+
+<span class="comment">// Uso</span>
+<span class="type">Direccion</span> dir = <span class="keyword">new</span> <span class="type">Direccion</span>(<span class="string">"Calle Falsa"</span>, <span class="number">123</span>, <span class="string">"Madrid"</span>);
+<span class="type">Persona</span> persona = <span class="keyword">new</span> <span class="type">Persona</span>(<span class="string">"Juan"</span>, dir);
+
+System.out.println(persona);
+<span class="comment">// Output: Persona{nombre='Juan', direccion=Calle Falsa 123, Madrid}</span></code></div>
+
+                <div class="example">
+                    <h3>📋 Buenas prácticas para toString()</h3>
+                    <ul>
+                        <li>✅ <strong>Incluir información de identificación:</strong> Campos que hacen único al objeto</li>
+                        <li>✅ <strong>Ser conciso:</strong> Solo información importante, no todos los campos</li>
+                        <li>✅ <strong>Usar formato claro:</strong> Que sea fácil de leer y entender</li>
+                        <li>✅ <strong>No llamar a métodos que modifican el estado:</strong> toString() no debe modificar el objeto</li>
+                        <li>✅ <strong>Manejar null:</strong> Si un campo puede ser null, validarlo antes de concatenar</li>
+                    </ul>
+                </div>
+
+                <div class="code-block"><code><span class="comment">// ================== EJEMPLO CON VALIDACIÓN DE NULL ==================</span>
+@Override
+<span class="keyword">public</span> String <span class="method">toString</span>() {
+    <span class="keyword">return</span> <span class="string">"Estudiante{"</span> +
+           <span class="string">"nombre='"</span> + nombre + <span class="string">"', "</span> +
+           <span class="string">"edad="</span> + edad +
+           (carrera != null ? <span class="string">", carrera='"</span> + carrera + <span class="string">"'"</span> : <span class="string">""</span>) +
+           <span class="string">"}"</span>;
+}
+
+<span class="comment">// Si carrera es null: Estudiante{nombre='Ana', edad=20}</span>
+<span class="comment">// Si carrera tiene valor: Estudiante{nombre='Ana', edad=20, carrera='Informática'}</span></code></div>
+
+                <div class="tip">
+                    <strong>💡 Consejo:</strong> En muchos IDEs como Eclipse o IntelliJ, puedes generar automáticamente
+                    el método toString() con clic derecho → Generate → toString(). Solo selecciona los campos
+                    que quieres incluir.
                 </div>
             </div>
 
