@@ -1,0 +1,2808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceptos Básicos de POO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .concept {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .concept h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+
+        .concept h2::before {
+            content: "📚";
+            margin-right: 10px;
+        }
+
+        .concept p {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            position: relative;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .code-block code {
+            display: block;
+            white-space: pre;
+            tab-size: 4;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+            font-weight: bold;
+        }
+
+        .code-block .type {
+            color: #4ec9b0;
+        }
+
+        .code-block .string {
+            color: #ce9178;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .code-block .number {
+            color: #b5cea8;
+        }
+
+        .code-block .method {
+            color: #dcdcaa;
+        }
+
+        .example {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .example h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+
+        .example ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .example li {
+            margin-bottom: 8px;
+        }
+
+        .diagram {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px dashed #667eea;
+            text-align: center;
+        }
+
+        .diagram-box {
+            border: 2px solid #667eea;
+            padding: 15px;
+            margin: 10px;
+            display: inline-block;
+            border-radius: 5px;
+            background: #f0f4ff;
+        }
+
+        .arrow {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.5em;
+            color: #667eea;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-top: 4px solid #764ba2;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .benefit-card h4 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .nav {
+            background: #667eea;
+            padding: 15px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav a:hover {
+            opacity: 0.8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        /* Estilos para ejercicios */
+        .exercise {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .exercise-badge {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .difficulty {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .difficulty.easy {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .difficulty.medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .difficulty.hard {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .exercise h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .exercise-description {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .code-editor {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .code-editor textarea {
+            width: 100%;
+            min-height: 200px;
+            background: transparent;
+            border: none;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+        }
+
+        .code-editor textarea::placeholder {
+            color: #6a9955;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result-box.success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+
+        .result-box.error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+
+        .result-box.info {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+            color: #0c5460;
+            display: block;
+        }
+
+        .hint {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .hint.show {
+            display: block;
+        }
+
+        .hint-toggle {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9em;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .concept {
+                padding: 20px;
+            }
+
+            .benefits {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Programación Orientada a Objetos</h1>
+            <p>Guía completa de conceptos fundamentales</p>
+        </header>
+
+        <nav class="nav">
+            <a href="#introduccion">Introducción</a>
+            <a href="#clases">Clases y Objetos</a>
+            <a href="#encapsulamiento">Encapsulamiento</a>
+            <a href="#constructor">Constructor</a>
+            <a href="#gets-sets">Getters y Setters</a>
+            <a href="#enums">Enums</a>
+            <a href="#crud">CRUD</a>
+            <a href="#diagramas">Diagramas de Clase</a>
+            <a href="#relaciones">Relaciones entre Clases</a>
+            <a href="#ejercicios">📝 Ejercicios</a>
+        </nav>
+
+        <div class="content">
+            <!-- Introducción -->
+            <div class="concept" id="introduccion">
+                <h2>¿Qué es la POO?</h2>
+                <p>
+                    La <strong>Programación Orientada a Objetos (POO)</strong> es un paradigma de programación
+                    que se basa en el concepto de "objetos", los cuales pueden contener datos y código.
+                    Los datos están en forma de campos (conocidos como atributos o propiedades), y el código,
+                    en forma de procedimientos (conocidos como métodos).
+                </p>
+
+                <div class="benefits">
+                    <div class="benefit-card">
+                        <h4>🔐 Reutilización</h4>
+                        <p>El código puede ser reutilizado a través de herencia y composición.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>🛡️ Encapsulamiento</h4>
+                        <p>Oculta los detalles de implementación y expone solo lo necesario.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>🧩 Modularidad</h4>
+                        <p>El código se organiza en módulos independientes y manejables.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>🔧 Mantenibilidad</h4>
+                        <p>Facilita el mantenimiento y la actualización del código.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clases y Objetos -->
+            <div class="concept" id="clases">
+                <h2>Clases y Objetos</h2>
+                <p>
+                    Una <strong>clase</strong> es como un plano o plantilla que define las características y
+                    comportamientos de algo. Un <strong>objeto</strong> es una instancia específica de esa clase.
+                </p>
+
+                <div class="tip">
+                    <strong>💡 Analogía:</strong> Piensa en una clase como el plano de una casa, y el objeto
+                    como la casa construida específica basada en ese plano.
+                </div>
+
+                <div class="code-block"><code><span class="comment">// Definición de una clase</span>
+<span class="keyword">public class</span> <span class="type">Persona</span> {
+
+    <span class="comment">// Atributos (propiedades)</span>
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private int</span> edad;
+    <span class="keyword">private</span> String ciudad;
+
+    <span class="comment">// Constructor completo</span>
+    <span class="keyword">public</span> <span class="type">Persona</span>(String nombre, <span class="keyword">int</span> edad, String ciudad) {
+        <span class="keyword">this</span>.nombre = nombre;
+        <span class="keyword">this</span>.edad = edad;
+        <span class="keyword">this</span>.ciudad = ciudad;
+    }
+
+    <span class="comment">// Métodos</span>
+    <span class="keyword">public void</span> <span class="method">saludar</span>() {
+        System.out.println(<span class="string">"Hola, soy "</span> + nombre + <span class="string">" de "</span> + ciudad);
+    }
+
+    <span class="comment">// Getters</span>
+    <span class="keyword">public</span> String <span class="method">getNombre</span>() {
+        <span class="keyword">return</span> nombre;
+    }
+
+    <span class="keyword">public int</span> <span class="method">getEdad</span>() {
+        <span class="keyword">return</span> edad;
+    }
+
+    <span class="keyword">public</span> String <span class="method">getCiudad</span>() {
+        <span class="keyword">return</span> ciudad;
+    }
+}
+
+<span class="comment">// Creación de objetos usando el constructor completo</span>
+<span class="type">Persona</span> persona1 = <span class="keyword">new</span> <span class="type">Persona</span>(<span class="string">"Juan"</span>, <span class="number">25</span>, <span class="string">"Madrid"</span>);
+<span class="type">Persona</span> persona2 = <span class="keyword">new</span> <span class="type">Persona</span>(<span class="string">"María"</span>, <span class="number">30</span>, <span class="string">"Barcelona"</span>);
+<span class="type">Persona</span> persona3 = <span class="keyword">new</span> <span class="type">Persona</span>(<span class="string">"Carlos"</span>, <span class="number">28</span>, <span class="string">"Valencia"</span>);
+
+<span class="comment">// Usar los objetos</span>
+persona1.<span class="method">saludar</span>();  <span class="comment">// Hola, soy Juan de Madrid</span>
+System.out.println(persona2.<span class="method">getNombre</span>() + <span class="string">" tiene "</span> + persona2.<span class="method">getEdad</span>() + <span class="string">" años"</span>);</code></div>
+            </div>
+
+            <!-- Encapsulamiento -->
+            <div class="concept" id="encapsulamiento">
+                <h2>Encapsulamiento</h2>
+                <p>
+                    El <strong>encapsulamiento</strong> es el principio de ocultar los detalles internos de
+                    una clase y exponer solo lo necesario a través de métodos públicos. Esto protege los
+                    datos y previene modificaciones no autorizadas.
+                </p>
+
+                <div class="benefits">
+                    <div class="benefit-card">
+                        <h4>🛡️ Protección</h4>
+                        <p>Los datos están protegidos contra accesos no autorizados.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>✅ Validación</h4>
+                        <p>Permite validar datos antes de modificarlos.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>🔌 Flexibilidad</h4>
+                        <p>Permite cambiar la implementación sin afectar el código externo.</p>
+                    </div>
+                </div>
+
+                <div class="code-block"><code><span class="keyword">public class</span> <span class="type">CuentaBancaria</span> {
+
+    <span class="comment">// Atributos privados - encapsulados</span>
+    <span class="keyword">private double</span> saldo;
+    <span class="keyword">private</span> String numeroCuenta;
+    <span class="keyword">private</span> String titular;
+
+    <span class="comment">// Constructor completo</span>
+    <span class="keyword">public</span> <span class="type">CuentaBancaria</span>(String numeroCuenta, String titular, <span class="keyword">double</span> saldoInicial) {
+        <span class="keyword">this</span>.numeroCuenta = numeroCuenta;
+        <span class="keyword">this</span>.titular = titular;
+
+        <span class="comment">// Validamos que el saldo inicial sea válido</span>
+        <span class="keyword">if</span> (saldoInicial >= <span class="number">0</span>) {
+            <span class="keyword">this</span>.saldo = saldoInicial;
+        } <span class="keyword">else</span> {
+            <span class="keyword">this</span>.saldo = <span class="number">0</span>;
+        }
+    }
+
+    <span class="comment">// Getters</span>
+    <span class="keyword">public double</span> <span class="method">getSaldo</span>() {
+        <span class="keyword">return</span> saldo;
+    }
+
+    <span class="keyword">public</span> String <span class="method">getNumeroCuenta</span>() {
+        <span class="keyword">return</span> numeroCuenta;
+    }
+
+    <span class="keyword">public</span> String <span class="method">getTitular</span>() {
+        <span class="keyword">return</span> titular;
+    }
+
+    <span class="comment">// Métodos para operar la cuenta</span>
+    <span class="keyword">public void</span> <span class="method">depositar</span>(<span class="keyword">double</span> monto) {
+        <span class="keyword">if</span> (monto > <span class="number">0</span>) {
+            saldo += monto;
+            System.out.println(<span class="string">"Depósito exitoso: $"</span> + monto);
+        }
+    }
+
+    <span class="keyword">public boolean</span> <span class="method">retirar</span>(<span class="keyword">double</span> monto) {
+        <span class="keyword">if</span> (monto > <span class="number">0</span> && saldo >= monto) {
+            saldo -= monto;
+            System.out.println(<span class="string">"Retiro exitoso: $"</span> + monto);
+            <span class="keyword">return true</span>;
+        }
+        System.out.println(<span class="string">"Fondos insuficientes"</span>);
+        <span class="keyword">return false</span>;
+    }
+}
+
+<span class="comment">// Uso del constructor</span>
+<span class="type">CuentaBancaria</span> cuenta = <span class="keyword">new</span> <span class="type">CuentaBancaria</span>(<span class="string">"123456"</span>, <span class="string">"Juan Pérez"</span>, <span class="number">1000.0</span>);
+
+System.out.println(<span class="string">"Titular: "</span> + cuenta.<span class="method">getTitular</span>());
+cuenta.<span class="method">depositar</span>(<span class="number">500.0</span>);
+cuenta.<span class="method">retirar</span>(<span class="number">200.0</span>);</code></div>
+
+                <div class="warning">
+                    ⚠️ <strong>Importante:</strong> Usa modificadores de acceso (private, public, protected)
+                    para controlar qué puede ser accedido desde fuera de la clase.
+                </div>
+            </div>
+
+            <!-- Constructor -->
+            <div class="concept" id="constructor">
+                <h2>Constructor</h2>
+                <p>
+                    El <strong>constructor</strong> es un método especial que se ejecuta automáticamente
+                    cuando se crea un objeto. Su propósito es inicializar los atributos del objeto.
+                </p>
+
+                <div class="example">
+                    <h3>Características del Constructor:</h3>
+                    <ul>
+                        <li>Tiene el mismo nombre que la clase</li>
+                        <li>No tiene tipo de retorno (ni void)</li>
+                        <li>Recibe todos los parámetros necesarios para inicializar el objeto</li>
+                        <li>Se ejecuta automáticamente al crear un objeto con <code>new</code></li>
+                    </ul>
+                </div>
+
+                <div class="code-block"><code><span class="keyword">public class</span> <span class="type">Coche</span> {
+
+    <span class="keyword">private</span> String marca;
+    <span class="keyword">private</span> String modelo;
+    <span class="keyword">private int</span> año;
+
+    <span class="comment">// Constructor completo - recibe todos los parámetros</span>
+    <span class="keyword">public</span> <span class="type">Coche</span>(String marca, String modelo, <span class="keyword">int</span> año) {
+        <span class="keyword">this</span>.marca = marca;
+        <span class="keyword">this</span>.modelo = modelo;
+        <span class="keyword">this</span>.año = año;
+    }
+
+    <span class="comment">// Getters</span>
+    <span class="keyword">public</span> String <span class="method">getMarca</span>() {
+        <span class="keyword">return</span> marca;
+    }
+
+    <span class="keyword">public</span> String <span class="method">getModelo</span>() {
+        <span class="keyword">return</span> modelo;
+    }
+
+    <span class="keyword">public int</span> <span class="method">getAño</span>() {
+        <span class="keyword">return</span> año;
+    }
+}
+
+<span class="comment">// Uso del constructor para crear objetos</span>
+<span class="type">Coche</span> coche1 = <span class="keyword">new</span> <span class="type">Coche</span>(<span class="string">"Toyota"</span>, <span class="string">"Corolla"</span>, <span class="number">2023</span>);
+<span class="type">Coche</span> coche2 = <span class="keyword">new</span> <span class="type">Coche</span>(<span class="string">"Honda"</span>, <span class="string">"Civic"</span>, <span class="number">2024</span>);
+<span class="type">Coche</span> coche3 = <span class="keyword">new</span> <span class="type">Coche</span>(<span class="string">"Ford"</span>, <span class="string">"Mustang"</span>, <span class="number">2025</span>);
+
+<span class="comment">// Acceder a la información usando getters</span>
+System.out.println(coche1.<span class="method">getMarca</span>());     <span class="comment">// Toyota</span>
+System.out.println(coche2.<span class="method">getModelo</span>());   <span class="comment">// Civic</span>
+System.out.println(coche3.<span class="method">getAño</span>());      <span class="comment">// 2025</span></code></div>
+            </div>
+
+            <!-- Getters y Setters -->
+            <div class="concept" id="gets-sets">
+                <h2>Getters y Setters</h2>
+                <p>
+                    Los <strong>getters</strong> y <strong>setters</strong> son métodos que permiten
+                    acceder y modificar los atributos privados de una clase de manera controlada.
+                </p>
+
+                <table>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Propósito</th>
+                        <th>Convención</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Getter</strong></td>
+                        <td>Obtener el valor de un atributo</td>
+                        <td>getNombreAtributo()</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Setter</strong></td>
+                        <td>Modificar el valor de un atributo</td>
+                        <td>setNombreAtributo(valor)</td>
+                    </tr>
+                </table>
+
+                <div class="code-block"><code><span class="keyword">public class</span> <span class="type">Estudiante</span> {
+
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private int</span> edad;
+    <span class="keyword">private double</span> promedio;
+
+    <span class="comment">// ================== GETTERS ==================</span>
+
+    <span class="keyword">public</span> String <span class="method">getNombre</span>() {
+        <span class="keyword">return</span> nombre;
+    }
+
+    <span class="keyword">public int</span> <span class="method">getEdad</span>() {
+        <span class="keyword">return</span> edad;
+    }
+
+    <span class="keyword">public double</span> <span class="method">getPromedio</span>() {
+        <span class="keyword">return</span> promedio;
+    }
+
+    <span class="comment">// ================== SETTERS ==================</span>
+
+    <span class="comment">// Setter para nombre con validación</span>
+    <span class="keyword">public void</span> <span class="method">setNombre</span>(String nombre) {
+        <span class="keyword">if</span> (nombre != null && !nombre.isEmpty()) {
+            <span class="keyword">this</span>.nombre = nombre;
+        }
+    }
+
+    <span class="comment">// Setter para edad con validación</span>
+    <span class="keyword">public void</span> <span class="method">setEdad</span>(<span class="keyword">int</span> edad) {
+        <span class="keyword">if</span> (edad >= <span class="number">0</span> && edad <= <span class="number">120</span>) {
+            <span class="keyword">this</span>.edad = edad;
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw new</span> <span class="type">IllegalArgumentException</span>(<span class="string">"Edad no válida"</span>);
+        }
+    }
+
+    <span class="comment">// Setter para promedio con validación</span>
+    <span class="keyword">public void</span> <span class="method">setPromedio</span>(<span class="keyword">double</span> promedio) {
+        <span class="keyword">if</span> (promedio >= <span class="number">0.0</span> && promedio <= <span class="number">10.0</span>) {
+            <span class="keyword">this</span>.promedio = promedio;
+        }
+    }
+}
+
+<span class="comment">// ================== USO DE GETTERS Y SETTERS ==================</span>
+<span class="type">Estudiante</span> est = <span class="keyword">new</span> <span class="type">Estudiante</span>();
+
+<span class="comment">// Usando SETTERS para asignar valores</span>
+est.<span class="method">setNombre</span>(<span class="string">"Ana"</span>);
+est.<span class="method">setEdad</span>(<span class="number">20</span>);
+est.<span class="method">setPromedio</span>(<span class="number">8.5</span>);
+
+<span class="comment">// Usando GETTERS para obtener valores</span>
+System.out.println(est.<span class="method">getNombre</span>());     <span class="comment">// Output: Ana</span>
+System.out.println(est.<span class="method">getEdad</span>());       <span class="comment">// Output: 20</span>
+System.out.println(est.<span class="method">getPromedio</span>());  <span class="comment">// Output: 8.5</span></code></div>
+
+                <div class="tip">
+                    <strong>💡 Ventaja:</strong> Los métodos <code>set</code> permiten validar los datos antes de asignarlos,
+                    manteniendo la integridad del objeto. Los métodos <code>get</code> permiten leer los datos
+                    sin modificarlos.
+                </div>
+            </div>
+
+            <!-- Enums -->
+            <div class="concept" id="enums">
+                <h2>Enums (Enumeraciones)</h2>
+                <p>
+                    Un <strong>enum</strong> es un tipo de dato especial que permite definir un conjunto
+                    de constantes con nombre. Son ideales para representar un conjunto fijo de valores
+                    relacionados.
+                </p>
+
+                <div class="example">
+                    <h3>Casos de uso comunes:</h3>
+                    <ul>
+                        <li>Días de la semana</li>
+                        <li>Estados (activo, inactivo, pendiente)</li>
+                        <li>Colores</li>
+                        <li>Niveles de usuario</li>
+                        <li>Tipos de documentos</li>
+                    </ul>
+                </div>
+
+                <div class="code-block"><code><span class="comment">// ================== ENUM SIMPLE ==================</span>
+<span class="keyword">public enum</span> <span class="type">DiaSemana</span> {
+    LUNES,
+    MARTES,
+    MIERCOLES,
+    JUEVES,
+    VIERNES,
+    SABADO,
+    DOMINGO
+}
+
+<span class="comment">// ================== ENUM CON MÉTODOS Y ATRIBUTOS ==================</span>
+<span class="keyword">public enum</span> <span class="type">NivelUsuario</span> {
+
+    ADMINISTRADOR(<span class="number">1</span>, <span class="string">"Tiene acceso total"</span>),
+    MODERADOR(<span class="number">2</span>, <span class="string">"Puede moderar contenido"</span>),
+    USUARIO(<span class="number">3</span>, <span class="string">"Acceso básico"</span>);
+
+    <span class="keyword">private final int</span> nivel;
+    <span class="keyword">private final String</span> descripcion;
+
+    <span class="comment">// Constructor del enum</span>
+    <span class="type">NivelUsuario</span>(<span class="keyword">int</span> nivel, String descripcion) {
+        <span class="keyword">this</span>.nivel = nivel;
+        <span class="keyword">this</span>.descripcion = descripcion;
+    }
+
+    <span class="comment">// Getters</span>
+    <span class="keyword">public int</span> <span class="method">getNivel</span>() {
+        <span class="keyword">return</span> nivel;
+    }
+
+    <span class="keyword">public</span> String <span class="method">getDescripcion</span>() {
+        <span class="keyword">return</span> descripcion;
+    }
+}
+
+<span class="comment">// ================== USO DE ENUMS ==================</span>
+<span class="comment">// Usar un enum simple</span>
+<span class="type">DiaSemana</span> hoy = <span class="type">DiaSemana</span>.LUNES;
+
+<span class="keyword">if</span> (hoy == <span class="type">DiaSemana</span>.SABADO || hoy == <span class="type">DiaSemana</span>.DOMINGO) {
+    System.out.println(<span class="string">"¡Es fin de semana!"</span>);
+}
+
+<span class="comment">// Usar un enum con atributos</span>
+<span class="type">NivelUsuario</span> nivel = <span class="type">NivelUsuario</span>.ADMINISTRADOR;
+System.out.println(nivel.<span class="method">getDescripcion</span>());  <span class="comment">// Output: Tiene acceso total</span>
+System.out.println(nivel.<span class="method">getNivel</span>());         <span class="comment">// Output: 1</span>
+
+<span class="comment">// Recorrer todos los valores de un enum</span>
+<span class="keyword">for</span> (<span class="type">DiaSemana</span> dia : <span class="type">DiaSemana</span>.values()) {
+    System.out.println(dia);
+}</code></div>
+            </div>
+
+            <!-- CRUD -->
+            <div class="concept" id="crud">
+                <h2>CRUD</h2>
+                <p>
+                    <strong>CRUD</strong> son las operaciones básicas para gestionar datos:
+                    <strong>C</strong>reate (Crear), <strong>R</strong>ead (Leer),
+                    <strong>U</strong>pdate (Actualizar) y <strong>D</strong>elete (Eliminar).
+                </p>
+
+                <table>
+                    <tr>
+                        <th>Operación</th>
+                        <th>SQL</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Create</strong></td>
+                        <td>INSERT</td>
+                        <td>Crear nuevos registros</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Read</strong></td>
+                        <td>SELECT</td>
+                        <td>Leer/consultar registros</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Update</strong></td>
+                        <td>UPDATE</td>
+                        <td>Actualizar registros existentes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delete</strong></td>
+                        <td>DELETE</td>
+                        <td>Eliminar registros</td>
+                    </tr>
+                </table>
+
+                <div class="code-block"><code><span class="comment">// ================== CLASE PRODUCTO ==================</span>
+<span class="keyword">public class</span> <span class="type">Producto</span> {
+
+    <span class="keyword">private int</span> id;
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private double</span> precio;
+
+    <span class="comment">// Constructor completo</span>
+    <span class="keyword">public</span> <span class="type">Producto</span>(<span class="keyword">int</span> id, String nombre, <span class="keyword">double</span> precio) {
+        <span class="keyword">this</span>.id = id;
+        <span class="keyword">this</span>.nombre = nombre;
+        <span class="keyword">this</span>.precio = precio;
+    }
+
+    <span class="comment">// Getters</span>
+    <span class="keyword">public int</span> <span class="method">getId</span>() { <span class="keyword">return</span> id; }
+    <span class="keyword">public</span> String <span class="method">getNombre</span>() { <span class="keyword">return</span> nombre; }
+    <span class="keyword">public double</span> <span class="method">getPrecio</span>() { <span class="keyword">return</span> precio; }
+
+    <span class="comment">// Setters</span>
+    <span class="keyword">public void</span> <span class="method">setNombre</span>(String nombre) { <span class="keyword">this</span>.nombre = nombre; }
+    <span class="keyword">public void</span> <span class="method">setPrecio</span>(<span class="keyword">double</span> precio) { <span class="keyword">this</span>.precio = precio; }
+}
+
+<span class="comment">// ================== GESTOR DE PRODUCTOS ==================</span>
+<span class="keyword">public class</span> <span class="type">GestorProductos</span> {
+
+    <span class="comment">// Arreglo de productos (máximo 50)</span>
+    <span class="keyword">private</span> <span class="type">Producto</span>[] productos;
+    <span class="keyword">private int</span> cantidad;
+
+    <span class="comment">// Constructor</span>
+    <span class="keyword">public</span> <span class="type">GestorProductos</span>() {
+        productos = <span class="keyword">new</span> <span class="type">Producto</span>[<span class="number">50</span>];
+        cantidad = <span class="number">0</span>;
+    }
+
+    <span class="comment">// ================== CREATE ==================</span>
+    <span class="keyword">public boolean</span> <span class="method">crearProducto</span>(<span class="keyword">int</span> id, String nombre, <span class="keyword">double</span> precio) {
+        <span class="keyword">if</span> (cantidad >= <span class="number">50</span>) {
+            System.out.println(<span class="string">"No hay espacio para más productos"</span>);
+            <span class="keyword">return false</span>;
+        }
+
+        productos[cantidad] = <span class="keyword">new</span> <span class="type">Producto</span>(id, nombre, precio);
+        cantidad++;
+        System.out.println(<span class="string">"Producto creado: "</span> + nombre);
+        <span class="keyword">return true</span>;
+    }
+
+    <span class="comment">// ================== READ ==================</span>
+    <span class="comment">// Listar todos los productos</span>
+    <span class="keyword">public void</span> <span class="method">listarProductos</span>() {
+        <span class="keyword">if</span> (cantidad == <span class="number">0</span>) {
+            System.out.println(<span class="string">"No hay productos registrados"</span>);
+            <span class="keyword">return</span>;
+        }
+
+        System.out.println(<span class="string">"=== LISTA DE PRODUCTOS ==="</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            System.out.println(productos[i].<span class="method">getId</span>() + <span class="string">". "</span> + productos[i].<span class="method">getNombre</span>() +
+                               <span class="string">" - $"</span> + productos[i].<span class="method">getPrecio</span>());
+        }
+    }
+
+    <span class="comment">// Obtener producto por ID</span>
+    <span class="keyword">public</span> <span class="type">Producto</span> <span class="method">obtenerPorId</span>(<span class="keyword">int</span> id) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            <span class="keyword">if</span> (productos[i].<span class="method">getId</span>() == id) {
+                <span class="keyword">return</span> productos[i];
+            }
+        }
+        <span class="keyword">return null</span>;
+    }
+
+    <span class="comment">// ================== UPDATE ==================</span>
+    <span class="keyword">public boolean</span> <span class="method">actualizarProducto</span>(<span class="keyword">int</span> id, String nuevoNombre, <span class="keyword">double</span> nuevoPrecio) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            <span class="keyword">if</span> (productos[i].<span class="method">getId</span>() == id) {
+                productos[i].<span class="method">setNombre</span>(nuevoNombre);
+                productos[i].<span class="method">setPrecio</span>(nuevoPrecio);
+                System.out.println(<span class="string">"Producto actualizado"</span>);
+                <span class="keyword">return true</span>;
+            }
+        }
+        System.out.println(<span class="string">"Producto no encontrado"</span>);
+        <span class="keyword">return false</span>;
+    }
+
+    <span class="comment">// ================== DELETE ==================</span>
+    <span class="keyword">public boolean</span> <span class="method">eliminarProducto</span>(<span class="keyword">int</span> id) {
+        <span class="comment">// Buscar el producto</span>
+        <span class="keyword">int</span> posicion = -<span class="number">1</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            <span class="keyword">if</span> (productos[i].<span class="method">getId</span>() == id) {
+                posicion = i;
+                <span class="keyword">break</span>;
+            }
+        }
+
+        <span class="keyword">if</span> (posicion == -<span class="number">1</span>) {
+            System.out.println(<span class="string">"Producto no encontrado"</span>);
+            <span class="keyword">return false</span>;
+        }
+
+        <span class="comment">// Mover los productos una posición atrás</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = posicion; i < cantidad - <span class="number">1</span>; i++) {
+            productos[i] = productos[i + <span class="number">1</span>];
+        }
+
+        <span class="comment">// Eliminar la referencia y reducir cantidad</span>
+        productos[cantidad - <span class="number">1</span>] = null;
+        cantidad--;
+        System.out.println(<span class="string">"Producto eliminado"</span>);
+        <span class="keyword">return true</span>;
+    }
+}
+
+<span class="comment">// ================== USO DE CRUD ==================</span>
+<span class="type">GestorProductos</span> gestor = <span class="keyword">new</span> <span class="type">GestorProductos</span>();
+
+<span class="comment">// CREATE - Crear productos</span>
+gestor.<span class="method">crearProducto</span>(<span class="number">1</span>, <span class="string">"Laptop"</span>, <span class="number">999.99</span>);
+gestor.<span class="method">crearProducto</span>(<span class="number">2</span>, <span class="string">"Mouse"</span>, <span class="number">25.50</span>);
+
+<span class="comment">// READ - Listar productos</span>
+gestor.<span class="method">listarProductos</span>();
+
+<span class="comment">// READ - Obtener un producto específico</span>
+<span class="type">Producto</span> p = gestor.<span class="method">obtenerPorId</span>(<span class="number">1</span>);
+<span class="keyword">if</span> (p != null) {
+    System.out.println(<span class="string">"Producto encontrado: "</span> + p.<span class="method">getNombre</span>());
+}
+
+<span class="comment">// UPDATE - Actualizar un producto</span>
+gestor.<span class="method">actualizarProducto</span>(<span class="number">1</span>, <span class="string">"Laptop Pro"</span>, <span class="number">1199.99</span>);
+
+<span class="comment">// DELETE - Eliminar un producto</span>
+gestor.<span class="method">eliminarProducto</span>(<span class="number">2</span>);
+
+<span class="comment">// Ver resultado final</span>
+gestor.<span class="method">listarProductos</span>();</code></div>
+
+                <div class="tip">
+                    <strong>💡 Buenas prácticas:</strong> Siempre valida los datos antes de crear o actualizar,
+                    y verifica si el elemento existe antes de actualizar o eliminar.
+                </div>
+            </div>
+
+            <!-- Diagramas de Clase -->
+            <div class="concept" id="diagramas">
+                <h2>Diagramas de Clase</h2>
+                <p>
+                    Los <strong>diagramas de clase</strong> son representaciones visuales de la estructura
+                    de un sistema orientado a objetos. Muestran las clases, sus atributos, métodos y
+                    las relaciones entre ellas.
+                </p>
+
+                <div class="example">
+                    <h3>Elementos de un Diagrama de Clase:</h3>
+                    <ul>
+                        <li><strong>Clase:</strong> Rectángulo dividido en 3 secciones (nombre, atributos, métodos)</li>
+                        <li><strong>Atributos:</strong> Variables de instancia con visibilidad (+, -, #)</li>
+                        <li><strong>Métodos:</strong> Funciones de la clase</li>
+                        <li><strong>Relaciones:</strong> Asociación, herencia, implementación, etc.</li>
+                    </ul>
+                </div>
+
+                <div class="diagram">
+                    <div style="text-align: left; display: inline-block;">
+                        <div class="diagram-box" style="width: 280px; text-align: left; font-family: monospace;">
+                            <div style="border-bottom: 2px solid #667eea; padding-bottom: 10px; margin-bottom: 10px; font-weight: bold;">
+                                Persona
+                            </div>
+                            <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px; font-size: 0.9em;">
+                                - nombre: String<br>
+                                - edad: int<br>
+                                # email: String
+                            </div>
+                            <div style="font-size: 0.9em;">
+                                + Persona(nombre: String)<br>
+                                + getNombre(): String<br>
+                                + setNombre(nombre: String): void<br>
+                                - validarEmail(): boolean
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; text-align: left;">
+                        <p><strong>Símbolos de visibilidad:</strong></p>
+                        <table style="font-size: 0.9em; margin-top: 10px;">
+                            <tr>
+                                <th>Símbolo</th>
+                                <th>Modificador</th>
+                                <th>Descripción</th>
+                            </tr>
+                            <tr>
+                                <td><code>+</code></td>
+                                <td>public</td>
+                                <td>Accesible desde cualquier lugar</td>
+                            </tr>
+                            <tr>
+                                <td><code>-</code></td>
+                                <td>private</td>
+                                <td>Solo accesible dentro de la clase</td>
+                            </tr>
+                            <tr>
+                                <td><code>#</code></td>
+                                <td>protected</td>
+                                <td>Accesible en la clase y subclases</td>
+                            </tr>
+                            <tr>
+                                <td><code>~</code></td>
+                                <td>default</td>
+                                <td>Accesible en el mismo paquete</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="margin-top: 30px; text-align: left;">
+                        <p><strong>Tipos de relaciones:</strong></p>
+                        <table style="font-size: 0.9em; margin-top: 10px;">
+                            <tr>
+                                <th>Símbolo</th>
+                                <th>Relación</th>
+                                <th>Descripción</th>
+                            </tr>
+                            <tr>
+                                <td>——</td>
+                                <td>Asociación</td>
+                                <td>Relación básica entre clases</td>
+                            </tr>
+                            <tr>
+                                <td>——▷</td>
+                                <td>Herencia</td>
+                                <td>"Es un" (extends)</td>
+                            </tr>
+                            <tr>
+                                <td>- - -▷</td>
+                                <td>Implementación</td>
+                                <td>Implementa interfaz</td>
+                            </tr>
+                            <tr>
+                                <td>——◆</td>
+                                <td>Composición</td>
+                                <td>Dependencia fuerte</td>
+                            </tr>
+                            <tr>
+                                <td>——◇</td>
+                                <td>Agregación</td>
+                                <td>Dependencia débil</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="code-block"><code><span class="comment">// Clase que corresponde al diagrama anterior</span>
+<span class="keyword">public class</span> <span class="type">Persona</span> {
+
+    <span class="comment">// Atributos privados (-)</span>
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private int</span> edad;
+
+    <span class="comment">// Atributo protegido (#)</span>
+    <span class="keyword">protected</span> String email;
+
+    <span class="comment">// Constructor público (+)</span>
+    <span class="keyword">public</span> <span class="type">Persona</span>(String nombre) {
+        <span class="keyword">this</span>.nombre = nombre;
+        <span class="keyword">this</span>.edad = <span class="number">0</span>;
+    }
+
+    <span class="comment">// Métodos públicos (+)</span>
+    <span class="keyword">public</span> String <span class="method">getNombre</span>() {
+        <span class="keyword">return</span> nombre;
+    }
+
+    <span class="keyword">public void</span> <span class="method">setNombre</span>(String nombre) {
+        <span class="keyword">this</span>.nombre = nombre;
+    }
+
+    <span class="comment">// Método privado (-)</span>
+    <span class="keyword">private boolean</span> <span class="method">validarEmail</span>() {
+        <span class="keyword">return</span> email != null && email.contains(<span class="string">"@"</span>);
+    }
+}</code></div>
+            </div>
+
+            <!-- Ejemplo Integrador -->
+            <div class="concept">
+                <h2>🎯 Ejemplo Integrador Completo</h2>
+                <p>
+                    Este ejemplo integra TODOS los conceptos aprendidos en un solo proyecto:
+                </p>
+
+                <div class="code-block"><code><span class="comment">// ================== ENUM ==================</span>
+<span class="keyword">public enum</span> <span class="type">EstadoTarea</span> {
+    PENDIENTE,
+    EN_PROGRESO,
+    COMPLETADA
+}
+
+<span class="comment">// ================== CLASE CON ENCAPSULAMIENTO ==================</span>
+<span class="keyword">public class</span> <span class="type">Tarea</span> {
+
+    <span class="comment">// Atributos privados (encapsulamiento)</span>
+    <span class="keyword">private int</span> id;
+    <span class="keyword">private</span> String titulo;
+    <span class="keyword">private</span> String descripcion;
+    <span class="keyword">private</span> <span class="type">EstadoTarea</span> estado;
+
+    <span class="comment">// Constructor completo</span>
+    <span class="keyword">public</span> <span class="type">Tarea</span>(<span class="keyword">int</span> id, String titulo, String descripcion, <span class="type">EstadoTarea</span> estado) {
+        <span class="keyword">this</span>.id = id;
+        <span class="keyword">this</span>.titulo = titulo;
+        <span class="keyword">this</span>.descripcion = descripcion;
+        <span class="keyword">this</span>.estado = estado;
+    }
+
+    <span class="comment">// ================== GETTERS ==================</span>
+    <span class="keyword">public int</span> <span class="method">getId</span>() {
+        <span class="keyword">return</span> id;
+    }
+
+    <span class="keyword">public</span> String <span class="method">getTitulo</span>() {
+        <span class="keyword">return</span> titulo;
+    }
+
+    <span class="keyword">public</span> <span class="type">EstadoTarea</span> <span class="method">getEstado</span>() {
+        <span class="keyword">return</span> estado;
+    }
+
+    <span class="comment">// ================== SETTERS ==================</span>
+    <span class="keyword">public void</span> <span class="method">setTitulo</span>(String titulo) {
+        <span class="keyword">if</span> (titulo != null && titulo.length() > <span class="number">0</span>) {
+            <span class="keyword">this</span>.titulo = titulo;
+        }
+    }
+
+    <span class="keyword">public void</span> <span class="method">setEstado</span>(<span class="type">EstadoTarea</span> estado) {
+        <span class="keyword">this</span>.estado = estado;
+    }
+
+    <span class="comment">// Método de negocio</span>
+    <span class="keyword">public void</span> <span class="method">marcarCompletada</span>() {
+        <span class="keyword">this</span>.estado = <span class="type">EstadoTarea</span>.COMPLETADA;
+    }
+}
+
+<span class="comment">// ================== GESTOR CON CRUD Y ARREGLOS ==================</span>
+<span class="keyword">public class</span> <span class="type">GestorTareas</span> {
+
+    <span class="comment">// Arreglo de tareas (máximo 100)</span>
+    <span class="keyword">private</span> <span class="type">Tarea</span>[] tareas;
+    <span class="keyword">private int</span> cantidad;
+    <span class="keyword">private int</span> nextId;
+
+    <span class="comment">// Constructor del gestor</span>
+    <span class="keyword">public</span> <span class="type">GestorTareas</span>() {
+        tareas = <span class="keyword">new</span> <span class="type">Tarea</span>[<span class="number">100</span>];
+        cantidad = <span class="number">0</span>;
+        nextId = <span class="number">1</span>;
+    }
+
+    <span class="comment">// ================== CREATE ==================</span>
+    <span class="keyword">public boolean</span> <span class="method">crearTarea</span>(String titulo, String descripcion) {
+        <span class="keyword">if</span> (cantidad >= <span class="number">100</span>) {
+            System.out.println(<span class="string">"No hay espacio para más tareas"</span>);
+            <span class="keyword">return false</span>;
+        }
+
+        <span class="comment">// Crear tarea con constructor completo</span>
+        tareas[cantidad] = <span class="keyword">new</span> <span class="type">Tarea</span>(nextId, titulo, descripcion, <span class="type">EstadoTarea</span>.PENDIENTE);
+        cantidad++;
+        nextId++;
+        System.out.println(<span class="string">"Tarea creada: "</span> + titulo);
+        <span class="keyword">return true</span>;
+    }
+
+    <span class="comment">// ================== READ ==================</span>
+    <span class="comment">// Obtener tarea por ID</span>
+    <span class="keyword">public</span> <span class="type">Tarea</span> <span class="method">obtenerTarea</span>(<span class="keyword">int</span> id) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            <span class="keyword">if</span> (tareas[i].<span class="method">getId</span>() == id) {
+                <span class="keyword">return</span> tareas[i];
+            }
+        }
+        <span class="keyword">return null</span>;
+    }
+
+    <span class="comment">// Listar todas las tareas</span>
+    <span class="keyword">public void</span> <span class="method">listarTareas</span>() {
+        <span class="keyword">if</span> (cantidad == <span class="number">0</span>) {
+            System.out.println(<span class="string">"No hay tareas registradas"</span>);
+            <span class="keyword">return</span>;
+        }
+
+        System.out.println(<span class="string">"=== LISTA DE TAREAS ==="</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            System.out.println(tareas[i].<span class="method">getId</span>() + <span class="string">". "</span> + tareas[i].<span class="method">getTitulo</span>() +
+                               <span class="string">" ["</span> + tareas[i].<span class="method">getEstado</span>() + <span class="string">"]"</span>);
+        }
+    }
+
+    <span class="comment">// ================== UPDATE ==================</span>
+    <span class="keyword">public boolean</span> <span class="method">actualizarTarea</span>(<span class="keyword">int</span> id, String nuevoTitulo) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            <span class="keyword">if</span> (tareas[i].<span class="method">getId</span>() == id) {
+                tareas[i].<span class="method">setTitulo</span>(nuevoTitulo);
+                System.out.println(<span class="string">"Tarea actualizada"</span>);
+                <span class="keyword">return true</span>;
+            }
+        }
+        System.out.println(<span class="string">"Tarea no encontrada"</span>);
+        <span class="keyword">return false</span>;
+    }
+
+    <span class="comment">// ================== DELETE ==================</span>
+    <span class="keyword">public boolean</span> <span class="method">eliminarTarea</span>(<span class="keyword">int</span> id) {
+        <span class="comment">// Buscar la tarea</span>
+        <span class="keyword">int</span> posicion = -<span class="number">1</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            <span class="keyword">if</span> (tareas[i].<span class="method">getId</span>() == id) {
+                posicion = i;
+                <span class="keyword">break</span>;
+            }
+        }
+
+        <span class="keyword">if</span> (posicion == -<span class="number">1</span>) {
+            System.out.println(<span class="string">"Tarea no encontrada"</span>);
+            <span class="keyword">return false</span>;
+        }
+
+        <span class="comment">// Mover las tareas una posición atrás</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = posicion; i < cantidad - <span class="number">1</span>; i++) {
+            tareas[i] = tareas[i + <span class="number">1</span>];
+        }
+
+        <span class="comment">// Eliminar la referencia y reducir cantidad</span>
+        tareas[cantidad - <span class="number">1</span>] = null;
+        cantidad--;
+        System.out.println(<span class="string">"Tarea eliminada"</span>);
+        <span class="keyword">return true</span>;
+    }
+}
+
+<span class="comment">// ================== USO INTEGRAL ==================</span>
+<span class="keyword">public class</span> <span class="type">Main</span> {
+    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+
+        <span class="comment">// Crear el gestor</span>
+        <span class="type">GestorTareas</span> gestor = <span class="keyword">new</span> <span class="type">GestorTareas</span>();
+
+        <span class="comment">// CREATE - Crear tareas (retorna boolean)</span>
+        gestor.<span class="method">crearTarea</span>(<span class="string">"Estudiar POO"</span>, <span class="string">"Repasar conceptos básicos"</span>);
+        gestor.<span class="method">crearTarea</span>(<span class="string">"Hacer ejercicios"</span>, <span class="string">"Practicar CRUD"</span>);
+
+        <span class="comment">// READ - Listar todas las tareas</span>
+        gestor.<span class="method">listarTareas</span>();
+        System.out.println(<span class="string">"Estado: "</span> + t1.<span class="method">getEstado</span>());
+
+        <span class="comment">// UPDATE - Actualizar tarea</span>
+        <span class="type">Tarea</span> t = gestor.<span class="method">obtenerTarea</span>(<span class="number">1</span>);
+        <span class="keyword">if</span> (t != null) {
+            t.<span class="method">marcarCompletada</span>();
+        }
+        gestor.<span class="method">actualizarTarea</span>(<span class="number">1</span>, <span class="string">"Estudiar POO ✓"</span>);
+
+        <span class="comment">// DELETE - Eliminar tarea</span>
+        gestor.<span class="method">eliminarTarea</span>(<span class="number">2</span>);
+
+        <span class="comment">// Ver resultado final</span>
+        gestor.<span class="method">listarTareas</span>();
+    }
+}</code></div>
+            </div>
+
+            <!-- Relaciones entre Clases -->
+            <div class="concept" id="relaciones">
+                <h2>🔗 Relaciones entre Clases</h2>
+                <p>
+                    En POO, las clases pueden relacionarse entre sí de diferentes maneras. Estas relaciones
+                    determinan cómo las clases interactúan y se comunican entre sí.
+                </p>
+
+                <!-- Asociación -->
+                <div class="example">
+                    <h3>1. Asociación</h3>
+                    <p><strong>Qué es:</strong> La relación más básica. Una clase "conoce" a otra y puede usarla.</p>
+                    <p><strong>En diagrama:</strong> Línea continua ——</p>
+                    <p><strong>Características importantes:</strong></p>
+                    <ul>
+                        <li><strong>Rol:</strong> Nombre que describe la función de una clase en la relación</li>
+                        <li><strong>Multiplicidad:</strong> Cuántos objetos participan (1 o *)</li>
+                    </ul>
+
+                    <div class="diagram">
+                        <div class="diagram-box">Estudiante</div>
+                        <div style="display: inline-block; text-align: center; width: 120px; vertical-align: top;">
+                            <div style="font-size: 12px; color: #667eea;">inscrito</div>
+                            <div style="font-size: 14px;">1</div>
+                            <div style="font-size: 24px;">————</div>
+                            <div style="font-size: 14px;">*</div>
+                            <div style="font-size: 12px; color: #667eea;">imparte</div>
+                        </div>
+                        <div class="diagram-box">Curso</div>
+                    </div>
+
+                    <div class="code-block"><code><span class="comment">// ================== ASOCIACIÓN CON ROL Y MULTIPLICIDAD ==================</span>
+<span class="comment">// Rol: inscrito (el estudiante está inscrito en cursos)</span>
+<span class="comment">// Multiplicidad: 1 estudiante se puede inscribir en muchos cursos (*)</span>
+
+<span class="keyword">public class</span> <span class="type">Estudiante</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private</span> <span class="type">Curso</span>[] cursos;  <span class="comment">// Asociación: * cursos (muchos)</span>
+    <span class="keyword">private int</span> cantidadCursos;
+
+    <span class="keyword">public</span> <span class="type">Estudiante</span>(String nombre) {
+        <span class="keyword">this</span>.nombre = nombre;
+        cursos = <span class="keyword">new</span> <span class="type">Curso</span>[<span class="number">5</span>];
+        cantidadCursos = <span class="number">0</span>;
+    }
+
+    <span class="comment">// El estudiante se inscribe en un curso</span>
+    <span class="keyword">public void</span> <span class="method">inscribirse</span>(<span class="type">Curso</span> curso) {
+        <span class="keyword">if</span> (cantidadCursos < <span class="number">5</span>) {
+            cursos[cantidadCursos++] = curso;
+            System.out.println(nombre + <span class="string">" se inscribió en "</span> + curso.<span class="method">getNombre</span>());
+        }
+    }
+
+    <span class="keyword">public void</span> <span class="method">mostrarCursos</span>() {
+        System.out.println(nombre + <span class="string">" está inscrito en:"</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidadCursos; i++) {
+            System.out.println(<span class="string">"  - "</span> + cursos[i].<span class="method">getNombre</span>());
+        }
+    }
+}
+
+<span class="comment">// Rol: imparte (el curso es impartido por profesores)</span>
+<span class="comment">// Multiplicidad: 1 curso tiene muchos estudiantes (*)</span>
+
+<span class="keyword">public class</span> <span class="type">Curso</span> {
+    <span class="keyword">private</span> String nombre;
+
+    <span class="keyword">public</span> <span class="type">Curso</span>(String nombre) {
+        <span class="keyword">this</span>.nombre = nombre;
+    }
+
+    <span class="keyword">public</span> String <span class="method">getNombre</span>() {
+        <span class="keyword">return</span> nombre;
+    }
+}
+
+<span class="comment">// Uso de la asociación</span>
+<span class="type">Estudiante</span> est = <span class="keyword">new</span> <span class="type">Estudiante</span>(<span class="string">"Ana"</span>);
+<span class="type">Curso</span> c1 = <span class="keyword">new</span> <span class="type">Curso</span>(<span class="string">"Programación"</span>);
+<span class="type">Curso</span> c2 = <span class="keyword">new</span> <span class="type">Curso</span>(<span class="string">"Base de Datos"</span>);
+
+est.<span class="method">inscribirse</span>(c1);
+est.<span class="method">inscribirse</span>(c2);
+est.<span class="method">mostrarCursos</span>();</code></div>
+
+                    <div class="tip">
+                        <strong>💡 Multiplicidades:</strong><br>
+                        • <code>1</code> = Uno<br>
+                        • <code>*</code> = Muchos
+                    </div>
+                </div>
+
+                <!-- Composición -->
+                <div class="example">
+                    <h3>2. Composición (Containment)</h3>
+                    <p><strong>Qué es:</strong> Una clase está "compuesta" por otras clases. Relación fuerte "tiene un".</p>
+                    <p><strong>En diagrama:</strong> Línea con rombo lleno ——◆</p>
+                    <p><strong>⚠️ IMPORTANTE:</strong> El rombo va en el lado de la clase que CONTIENE (el "padre" o todo).</p>
+                    <p><strong>En código:</strong> La clase contenedora tiene objetos de otra clase como atributos.</p>
+                    <p><strong>Característica:</strong> Si el objeto padre se destruye, los hijos también.</p>
+
+                    <div class="diagram">
+                        <div class="diagram-box">Auto</div>
+                        <div style="display: inline-block; text-align: center; width: 100px;">
+                            <div style="font-size: 24px;">◆————</div>
+                            <div style="font-size: 12px; color: #764ba2;">rombo en el contenedor</div>
+                        </div>
+                        <div class="diagram-box">Motor</div>
+                    </div>
+
+                    <div class="code-block"><code><span class="comment">// ================== COMPOSICIÓN (CONTAINMENT) ==================</span>
+<span class="comment">// Clase que será parte de otra (el "todo" no existe sin esta parte)</span>
+<span class="keyword">public class</span> <span class="type">Motor</span> {
+    <span class="keyword">private int</span> caballosFuerza;
+    <span class="keyword">private</span> String tipoCombustible;
+
+    <span class="keyword">public</span> <span class="type">Motor</span>(<span class="keyword">int</span> caballosFuerza, String tipoCombustible) {
+        <span class="keyword">this</span>.caballosFuerza = caballosFuerza;
+        <span class="keyword">this</span>.tipoCombustible = tipoCombustible;
+    }
+
+    <span class="keyword">public void</span> <span class="method">encender</span>() {
+        System.out.println(<span class="string">"Motor encendido: "</span> + caballosFuerza + <span class="string">" HP"</span>);
+    }
+}
+
+<span class="comment">// Clase CONTENEDORA (tiene el rombo en el diagrama)</span>
+<span class="keyword">public class</span> <span class="type">Auto</span> {
+    <span class="keyword">private</span> String marca;
+    <span class="keyword">private</span> <span class="type">Motor</span> motor;  <span class="comment">// COMPOSICIÓN: Auto TIENE un Motor</span>
+
+    <span class="comment">// Constructor completo</span>
+    <span class="keyword">public</span> <span class="type">Auto</span>(String marca, <span class="type">Motor</span> motor) {
+        <span class="keyword">this</span>.marca = marca;
+        <span class="keyword">this</span>.motor = motor;  <span class="comment">// El motor es parte del auto</span>
+    }
+
+    <span class="keyword">public void</span> <span class="method">encender</span>() {
+        System.out.println(<span class="string">"Encendiendo auto "</span> + marca);
+        motor.<span class="method">encender</span>();  <span class="comment">// Usa su motor</span>
+    }
+}
+
+<span class="comment">// Uso de la composición</span>
+<span class="comment">// El motor se crea específicamente para este auto</span>
+<span class="type">Motor</span> motorV8 = <span class="keyword">new</span> <span class="type">Motor</span>(<span class="number">400</span>, <span class="string">"Gasolina"</span>);
+<span class="type">Auto</span> mustang = <span class="keyword">new</span> <span class="type">Auto</span>(<span class="string">"Ford Mustang"</span>, motorV8);
+
+mustang.<span class="method">encender</span>();
+<span class="comment">// Output:
+<span class="comment">// Encendiendo auto Ford Mustang</span>
+<span class="comment">// Motor encendido: 400 HP</span>
+
+<span class="comment">// Si destruyes el auto, el motor también deja de existir</span>
+<span class="comment">// No puedes sacar el motor de este auto y ponerlo en otro</span></code></div>
+
+                    <div class="tip">
+                        <strong>💡 Composición (Containment):</strong><br>
+                        • El rombo ◆ va en el lado del CONTENEDOR (Auto)<br>
+                        • El motor NO puede existir sin el auto<br>
+                        • Relación de dependencia fuerte (todo-parte)<br>
+                        • Si destruyes el auto, el motor también se destruye
+                    </div>
+                </div>
+
+                <!-- Agregación -->
+                <div class="example">
+                    <h3>3. Agregación (Sharing)</h3>
+                    <p><strong>Qué es:</strong> Similar a la composición pero más débil. También es "tiene un" pero los objetos pueden existir independientemente.</p>
+                    <p><strong>En diagrama:</strong> Línea con rombo vacío ——◇</p>
+                    <p><strong>⚠️ IMPORTANTE:</strong> El rombo va en el lado de la clase que AGREGA (el "todo" o grupo).</p>
+                    <p><strong>En código:</strong> La clase agrupadora tiene objetos de otra, pero estos pueden existir por separado.</p>
+
+                    <div class="diagram">
+                        <div class="diagram-box">Equipo</div>
+                        <div style="display: inline-block; text-align: center; width: 100px;">
+                            <div style="font-size: 24px;">◇————</div>
+                            <div style="font-size: 12px; color: #764ba2;">rombo en el agregador</div>
+                        </div>
+                        <div class="diagram-box">Jugador</div>
+                    </div>
+
+                    <div class="code-block"><code><span class="comment">// ================== AGREGACIÓN (SHARING) ==================</span>
+<span class="comment">// Clase que puede existir independientemente</span>
+<span class="keyword">public class</span> <span class="type">Jugador</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private int</span> numeroCamiseta;
+
+    <span class="keyword">public</span> <span class="type">Jugador</span>(String nombre, <span class="keyword">int</span> numeroCamiseta) {
+        <span class="keyword">this</span>.nombre = nombre;
+        <span class="keyword">this</span>.numeroCamiseta = numeroCamiseta;
+    }
+
+    <span class="comment">// Getters</span>
+    <span class="keyword">public</span> String <span class="method">getNombre</span>() {
+        <span class="keyword">return</span> nombre;
+    }
+
+    <span class="keyword">public int</span> <span class="method">getNumero</span>() {
+        <span class="keyword">return</span> numeroCamiseta;
+    }
+}
+
+<span class="comment">// Clase AGREGADORA (tiene el rombo en el diagrama)</span>
+<span class="keyword">public class</span> <span class="type">Equipo</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private</span> <span class="type">Jugador</span>[] jugadores;  <span class="comment">// AGREGACIÓN: Equipo TIENE Jugadores</span>
+    <span class="keyword">private int</span> cantidad;
+
+    <span class="comment">// Constructor</span>
+    <span class="keyword">public</span> <span class="type">Equipo</span>(String nombre) {
+        <span class="keyword">this</span>.nombre = nombre;
+        jugadores = <span class="keyword">new</span> <span class="type">Jugador</span>[<span class="number">11</span>];
+        cantidad = <span class="number">0</span>;
+    }
+
+    <span class="comment">// Agregar jugador al equipo (compartir)</span>
+    <span class="keyword">public void</span> <span class="method">agregarJugador</span>(<span class="type">Jugador</span> jugador) {
+        <span class="keyword">if</span> (cantidad < <span class="number">11</span>) {
+            jugadores[cantidad++] = jugador;
+            System.out.println(jugador.<span class="method">getNombre</span>() + <span class="string">" agregado a "</span> + nombre);
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"Equipo completo"</span>);
+        }
+    }
+
+    <span class="comment">// Mostrar jugadores del equipo</span>
+    <span class="keyword">public void</span> <span class="method">mostrarJugadores</span>() {
+        System.out.println(<span class="string">"Jugadores de "</span> + nombre + <span class="string">":"</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            System.out.println(<span class="string">"- "</span> + jugadores[i].<span class="method">getNumero</span>() + <span class="string">". "</span> + jugadores[i].<span class="method">getNombre</span>());
+        }
+    }
+}
+
+<span class="comment">// Uso de la agregación (sharing)</span>
+<span class="comment">// Los jugadores pueden existir sin el equipo</span>
+<span class="type">Jugador</span> j1 = <span class="keyword">new</span> <span class="type">Jugador</span>(<span class="string">"Messi"</span>, <span class="number">10</span>);
+<span class="type">Jugador</span> j2 = <span class="keyword">new</span> <span class="type">Jugador</span>(<span class="string">"Di María"</span>, <span class="number">11</span>);
+
+<span class="comment">// Un jugador puede pertenecer a un equipo</span>
+<span class="type">Equipo</span> equipo1 = <span class="keyword">new</span> <span class="type">Equipo</span>(<span class="string">"Argentina"</span>);
+equipo1.<span class="method">agregarJugador</span>(j1);
+equipo1.<span class="method">agregarJugador</span>(j2);
+equipo1.<span class="method">mostrarJugadores</span>();
+
+<span class="comment">// El jugador puede cambiarse a otro equipo (sharing)</span>
+<span class="type">Equipo</span> equipo2 = <span class="keyword">new</span> <span class="type">Equipo</span>(<span class="string">"PSG"</span>);
+equipo2.<span class="method">agregarJugador</span>(j1);  <span class="comment">// Messi puede jugar en otro equipo</span>
+
+<span class="comment">// Si se disuelve el equipo, los jugadores siguen existiendo</span>
+<span class="comment">// y pueden unirse a otro equipo</span></code></div>
+
+                    <div class="tip">
+                        <strong>💡 Agregación (Sharing):</strong><br>
+                        • El rombo ◇ va en el lado del AGREGADOR (Equipo)<br>
+                        • Los jugadores PUEDEN existir sin el equipo<br>
+                        • Relación débil (agrupación, no todo-parte)<br>
+                        • Un jugador puede pertenecer a varios equipos en diferentes momentos
+                    </div>
+                </div>
+
+                <!-- Tabla Resumen -->
+                <div class="example">
+                    <h3>📊 Resumen de Relaciones</h3>
+                    <table>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Símbolo UML</th>
+                            <th>Concepto</th>
+                            <th>¿Dónde va el rombo?</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Asociación</strong></td>
+                            <td>——</td>
+                            <td>"Conoce a"</td>
+                            <td>Sin rombo</td>
+                            <td>Estudiante inscribe Curso</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Composición</strong></td>
+                            <td>◆——</td>
+                            <td>"Tiene un" (fuerte)</td>
+                            <td>En el CONTENEDOR</td>
+                            <td>Auto tiene Motor</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Agregación</strong></td>
+                            <td>◇——</td>
+                            <td>"Tiene un" (débil)</td>
+                            <td>En el AGREGADOR</td>
+                            <td>Equipo tiene Jugadores</td>
+                        </tr>
+                    </table>
+
+                    <div class="tip">
+                        <strong>💡 Regla mnemotécnica:</strong><br>
+                        • El rombo SIEMPRE va del lado que "TIENE" o "AGRUPA"<br>
+                        • ◆ Composición: rombo LLENO = relación FUERTE (containment)<br>
+                        • ◇ Agregación: rombo VACÍO = relación DÉBIL (sharing)
+                    </div>
+                </div>
+
+                <!-- Ejemplo Integrador de Relaciones -->
+                <div class="example">
+                    <h3>🎯 Ejemplo Integrador: Sistema de Tienda</h3>
+                    <p>Este ejemplo combina las tres relaciones con roles y multiplicidades:</p>
+
+                    <div class="diagram">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div class="diagram-box" style="margin: 10px;">Cliente</div>
+                            <div style="font-size: 12px; color: #667eea;">realiza</div>
+                            <div style="font-size: 14px;">1</div>
+                            <div style="font-size: 24px;">—————————</div>
+                            <div style="font-size: 14px;">*</div>
+                            <div class="diagram-box" style="margin: 10px;">Compra</div>
+                        </div>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <div class="diagram-box" style="margin: 10px;">Compra</div>
+                            <div style="font-size: 12px; color: #667eea;">contiene</div>
+                            <div style="font-size: 14px;">1</div>
+                            <div style="font-size: 24px;">◆——————————</div>
+                            <div style="font-size: 14px;">*</div>
+                            <div class="diagram-box" style="margin: 10px;">Producto</div>
+                            <div style="font-size: 12px; color: #764ba2;">rombo en Compra (contenedor)</div>
+                        </div>
+                        <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px dashed #667eea;">
+                            <div class="diagram-box" style="margin: 10px;">Tienda</div>
+                            <div style="font-size: 12px; color: #667eea;">vende</div>
+                            <div style="font-size: 14px;">1</div>
+                            <div style="font-size: 24px;">◇——————————</div>
+                            <div style="font-size: 14px;">*</div>
+                            <div class="diagram-box" style="margin: 10px;">Producto</div>
+                            <div style="font-size: 12px; color: #764ba2;">rombo en Tienda (agregador)</div>
+                        </div>
+                    </div>
+
+                    <div class="code-block"><code><span class="comment">// ================== SISTEMA DE TIENDA ==================</span>
+
+<span class="comment">// Clase Producto (para composición y agregación)</span>
+<span class="keyword">public class</span> <span class="type">Producto</span> {
+    <span class="keyword">private int</span> codigo;
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private double</span> precio;
+
+    <span class="keyword">public</span> <span class="type">Producto</span>(<span class="keyword">int</span> codigo, String nombre, <span class="keyword">double</span> precio) {
+        <span class="keyword">this</span>.codigo = codigo;
+        <span class="keyword">this</span>.nombre = nombre;
+        <span class="keyword">this</span>.precio = precio;
+    }
+
+    <span class="comment">// Getters</span>
+    <span class="keyword">public int</span> <span class="method">getCodigo</span>() { <span class="keyword">return</span> codigo; }
+    <span class="keyword">public</span> String <span class="method">getNombre</span>() { <span class="keyword">return</span> nombre; }
+    <span class="keyword">public double</span> <span class="method">getPrecio</span>() { <span class="keyword">return</span> precio; }
+}
+
+<span class="comment">// ================== COMPOSICIÓN (Containment) ==================</span>
+<span class="comment">// Compra CONTIENE productos (rombo en Compra)</span>
+<span class="keyword">public class</span> <span class="type">Compra</span> {
+
+    <span class="keyword">private</span> String fecha;
+    <span class="keyword">private</span> <span class="type">Producto</span>[] productos;  <span class="comment">// Compra TIENE productos (*)</span>
+    <span class="keyword">private int</span> cantidad;
+
+    <span class="keyword">public</span> <span class="type">Compra</span>(String fecha) {
+        <span class="keyword">this</span>.fecha = fecha;
+        productos = <span class="keyword">new</span> <span class="type">Producto</span>[<span class="number">10</span>];
+        cantidad = <span class="number">0</span>;
+    }
+
+    <span class="comment">// Agregar producto a la compra</span>
+    <span class="keyword">public void</span> <span class="method">agregarProducto</span>(<span class="type">Producto</span> prod) {
+        <span class="keyword">if</span> (cantidad < <span class="number">10</span>) {
+            productos[cantidad++] = prod;
+        }
+    }
+
+    <span class="keyword">public double</span> <span class="method">getTotal</span>() {
+        <span class="keyword">double</span> total = <span class="number">0</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            total += productos[i].<span class="method">getPrecio</span>();
+        }
+        <span class="keyword">return</span> total;
+    }
+}
+
+<span class="comment">// ================== ASOCIACIÓN ==================</span>
+<span class="comment">// Cliente REALIZA compras (sin rombo)</span>
+<span class="keyword">public class</span> <span class="type">Cliente</span> {
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private</span> String dni;
+
+    <span class="keyword">public</span> <span class="type">Cliente</span>(String nombre, String dni) {
+        <span class="keyword">this</span>.nombre = nombre;
+        <span class="keyword">this</span>.dni = dni;
+    }
+
+    <span class="comment">// ASOCIACIÓN: el cliente realiza una compra temporalmente</span>
+    <span class="keyword">public void</span> <span class="method">realizarCompra</span>(<span class="type">Compra</span> compra) {
+        System.out.println(<span class="string">"Cliente: "</span> + nombre);
+        System.out.println(<span class="string">"Total de compra: $"</span> + compra.<span class="method">getTotal</span>());
+    }
+
+    <span class="comment">// Getters</span>
+    <span class="keyword">public</span> String <span class="method">getNombre</span>() { <span class="keyword">return</span> nombre; }
+}
+
+<span class="comment">// ================== AGREGACIÓN (Sharing) ==================</span>
+<span class="comment">// Tienda AGRUPA productos en inventario (rombo en Tienda)</span>
+<span class="keyword">public class</span> <span class="type">Tienda</span> {
+
+    <span class="keyword">private</span> String nombre;
+    <span class="keyword">private</span> <span class="type">Producto</span>[] inventario;  <span class="comment">// Tienda AGRUPA productos (*)</span>
+    <span class="keyword">private int</span> cantidad;
+
+    <span class="keyword">public</span> <span class="type">Tienda</span>(String nombre) {
+        <span class="keyword">this</span>.nombre = nombre;
+        inventario = <span class="keyword">new</span> <span class="type">Producto</span>[<span class="number">100</span>];
+        cantidad = <span class="number">0</span>;
+    }
+
+    <span class="comment">// Agregar producto al inventario</span>
+    <span class="keyword">public void</span> <span class="method">agregarProducto</span>(<span class="type">Producto</span> prod) {
+        <span class="keyword">if</span> (cantidad < <span class="number">100</span>) {
+            inventario[cantidad++] = prod;
+            System.out.println(<span class="string">"Producto agregado: "</span> + prod.<span class="method">getNombre</span>());
+        }
+    }
+
+    <span class="comment">// Mostrar inventario</span>
+    <span class="keyword">public void</span> <span class="method">mostrarInventario</span>() {
+        System.out.println(<span class="string">"=== INVENTARIO DE "</span> + nombre + <span class="string">" ==="</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < cantidad; i++) {
+            System.out.println(inventario[i].<span class="method">getCodigo</span>() + <span class="string">". "</span> +
+                               inventario[i].<span class="method">getNombre</span>() + <span class="string">" - $"</span> +
+                               inventario[i].<span class="method">getPrecio</span>());
+        }
+    }
+}
+
+<span class="comment">// ================== USO DEL SISTEMA ==================</span>
+<span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+
+    <span class="comment">// Crear productos (existen independientemente)</span>
+    <span class="type">Producto</span> p1 = <span class="keyword">new</span> <span class="type">Producto</span>(<span class="number">1</span>, <span class="string">"Laptop"</span>, <span class="number">999.99</span>);
+    <span class="type">Producto</span> p2 = <span class="keyword">new</span> <span class="type">Producto</span>(<span class="number">2</span>, <span class="string">"Mouse"</span>, <span class="number">25.50</span>);
+
+    <span class="comment">// AGREGACIÓN: Tienda agrupa productos (sharing)</span>
+    <span class="type">Tienda</span> tienda = <span class="keyword">new</span> <span class="type">Tienda</span>(<span class="string">"TechStore"</span>);
+    tienda.<span class="method">agregarProducto</span>(p1);
+    tienda.<span class="method">agregarProducto</span>(p2);
+
+    <span class="comment">// COMPOSICIÓN: Crear una compra que contiene productos</span>
+    <span class="type">Compra</span> compra = <span class="keyword">new</span> <span class="type">Compra</span>(<span class="string">"10/03/2026"</span>);
+    compra.<span class="method">agregarProducto</span>(p1);  <span class="comment">// Mismo producto se puede compartir</span>
+    compra.<span class="method">agregarProducto</span>(p2);
+
+    <span class="comment">// ASOCIACIÓN: Cliente realiza una compra</span>
+    <span class="type">Cliente</span> cliente = <span class="keyword">new</span> <span class="type">Cliente</span>(<span class="string">"Juan Pérez"</span>, <span class="string">"12345678"</span>);
+    cliente.<span class="method">realizarCompra</span>(compra);
+
+    <span class="comment">// Mostrar inventario de la tienda</span>
+    tienda.<span class="method">mostrarInventario</span>();
+
+    <span class="comment">// Diferencia clave:</span>
+    <span class="comment">// - Si se anula la compra, los productos SIGUEN existiendo (están en la tienda)</span>
+    <span class="comment">// - Si cierra la tienda, los productos SIGUEN existiendo (pueden venderse en otra tienda)</span>
+    <span class="comment">// - La compra es solo una asociación temporal con el cliente</span>
+}</code></div>
+
+                    <div class="tip">
+                        <strong>💡 Resumen del ejemplo con roles y multiplicidades:</strong><br>
+                        • <strong>Asociación:</strong> Cliente(1) —realiza——> Compra(*) - Sin rombo<br>
+                        • <strong>Composición:</strong> Compra(1) ◆—contiene——> Producto(*) - Rombo en Compra (containment)<br>
+                        • <strong>Agregación:</strong> Tienda(1) ◇—vende——> Producto(*) - Rombo en Tienda (sharing)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Ejercicios Prácticos -->
+            <div class="concept" id="ejercicios">
+                <h2>📝 Ejercicios Prácticos</h2>
+                <p>
+                    Pon a prueba tus conocimientos resolviendo estos ejercicios. Usa <code>JOptionPane</code>
+                    para pedir información al usuario y <code>Arrays</code> para almacenar datos.
+                </p>
+
+                <!-- Ejercicio 1 -->
+                <div class="exercise" id="ejercicio1">
+                    <div class="exercise-header">
+                        <h3>Ejercicio 1: Clase Estudiante</h3>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+
+                    <div class="exercise-description">
+                        <strong>Objetivo:</strong> Crea una clase <code>Estudiante</code> con los siguientes requisitos:<br><br>
+                        <ul>
+                            <li>Atributos privados: nombre (String), nota (double)</li>
+                            <li>Constructor que reciba nombre y nota</li>
+                            <li>Getter para cada atributo</li>
+                            <li>Setter para la nota (que solo acepte valores entre 0 y 10)</li>
+                            <li>Método <code>estaAprobado()</code> que retorne true si la nota >= 6</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-editor">
+                        <textarea id="code1" placeholder="// Escribe tu código aquí
+// Recuerda importar javax.swing.*;
+
+public class Estudiante {
+
+    // Tus atributos aquí
+
+    // Constructor aquí
+
+    // Getters y setters aquí
+
+    // Método estaAprobado() aquí
+}"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="verificarEjercicio1()">Verificar Código</button>
+                    <button class="btn btn-secondary" onclick="mostrarSolucion1()">Ver Solución</button>
+
+                    <div id="result1" class="result-box"></div>
+
+                    <div id="hint1" class="hint">
+                        <strong>💡 Pista:</strong><br>
+                        • Los atributos privados se declaran con <code>private</code><br>
+                        • El constructor tiene el mismo nombre que la clase<br>
+                        • El setter debe validar: <code>if (nota >= 0 && nota <= 10)</code><br>
+                        • El método estaAprobado retorna: <code>return this.nota >= 6;</code>
+                    </div>
+
+                    <span class="hint-toggle" onclick="document.getElementById('hint1').classList.toggle('show')">Mostrar Pista</span>
+                </div>
+
+                <!-- Ejercicio 2 -->
+                <div class="exercise" id="ejercicio2">
+                    <div class="exercise-header">
+                        <h3>Ejercicio 2: Gestor de Productos con CRUD</h3>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+
+                    <div class="exercise-description">
+                        <strong>Objetivo:</strong> Completa los métodos CRUD en la clase <code>GestorProductos</code>:
+                        <ul>
+                            <li>Usa un <code>String[]</code> para almacenar nombres de productos (máximo 10)</li>
+                            <li><strong>CREATE:</strong> Método <code>agregarProducto(String nombre)</code> - agrega si hay espacio</li>
+                            <li><strong>READ:</strong> Método <code>listarProductos()</code> - muestra todos los productos</li>
+                            <li><strong>UPDATE:</strong> Método <code>actualizarProducto(int indice, String nuevoNombre)</code></li>
+                            <li><strong>DELETE:</strong> Método <code>eliminarProducto(int indice)</code> - deja null en esa posición</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-editor">
+                        <textarea id="code2" placeholder="// Escribe tu código aquí
+
+import javax.swing.*;
+
+public class GestorProductos {
+    private String[] productos;
+    private int cantidad;
+
+    public GestorProductos() {
+        productos = new String[10];
+        cantidad = 0;
+    }
+
+    // Completa los métodos CRUD
+
+    public void agregarProducto(String nombre) {
+        // Tu código aquí
+    }
+
+    public void listarProductos() {
+        // Tu código aquí - usa JOptionPane.showMessageDialog
+    }
+
+    public void actualizarProducto(int indice, String nuevoNombre) {
+        // Tu código aquí
+    }
+
+    public void eliminarProducto(int indice) {
+        // Tu código aquí
+    }
+}"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="verificarEjercicio2()">Verificar Código</button>
+                    <button class="btn btn-secondary" onclick="mostrarSolucion2()">Ver Solución</button>
+
+                    <div id="result2" class="result-box"></div>
+
+                    <div id="hint2" class="hint">
+                        <strong>💡 Pista:</strong><br>
+                        • Para agregar: verifica <code>if (cantidad < 10)</code> y asigna <code>productos[cantidad++] = nombre;</code><br>
+                        • Para listar: usa un for hasta <code>cantidad</code> y acumula en un String<br>
+                        • Para actualizar: verifica <code>if (indice >= 0 && indice < cantidad)</code><br>
+                        • Para eliminar: asigna <code>null</code> y mueve los elementos restantes
+                    </div>
+
+                    <span class="hint-toggle" onclick="document.getElementById('hint2').classList.toggle('show')">Mostrar Pista</span>
+                </div>
+
+                <!-- Ejercicio 3 -->
+                <div class="exercise" id="ejercicio3">
+                    <div class="exercise-header">
+                        <h3>Ejercicio 3: Sistema de Votación</h3>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+
+                    <div class="exercise-description">
+                        <strong>Objetivo:</strong> Crea un sistema de votación usando un enum:
+                        <ul>
+                            <li>Crea un <code>enum Candidato</code> con: JUAN, MARIA, CARLOS, ANA, BLANCO</li>
+                            <li>Clase <code>Voto</code> con atributo privado <code>Candidato candidato</code></li>
+                            <li>Constructor y getter para <code>Voto</code></li>
+                            <li>Clase <code>SistemaVotacion</code> con un array <code>Voto[] votos</code></li>
+                            <li>Método <code>registrarVoto(Candidato c)</code> que agregue un voto al array</li>
+                            <li>Método <code>contarVotos(Candidato c)</code> que retorne cuántos votos tiene un candidato</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-editor">
+                        <textarea id="code3" placeholder="// Escribe tu código aquí
+// Primero define el enum
+
+enum Candidato {
+    // Completa los candidatos
+}
+
+// Luego la clase Voto
+class Voto {
+    // Atributo privado de tipo Candidato
+
+    // Constructor
+
+    // Getter
+}
+
+// Finalmente la clase SistemaVotacion
+class SistemaVotacion {
+    private Voto[] votos;
+    private int totalVotos;
+
+    public SistemaVotacion() {
+        votos = new Voto[100];
+        totalVotos = 0;
+    }
+
+    // Completa los métodos
+}"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="verificarEjercicio3()">Verificar Código</button>
+                    <button class="btn btn-secondary" onclick="mostrarSolucion3()">Ver Solución</button>
+
+                    <div id="result3" class="result-box"></div>
+
+                    <div id="hint3" class="hint">
+                        <strong>💡 Pista:</strong><br>
+                        • El enum es: <code>JUAN, MARIA, CARLOS, ANA, BLANCO</code><br>
+                        • En <code>registrarVoto</code>: crea <code>votos[totalVotos++] = new Voto(c);</code><br>
+                        • En <code>contarVotos</code>: recorre el array hasta <code>totalVotos</code> y cuenta los que coinciden
+                    </div>
+
+                    <span class="hint-toggle" onclick="document.getElementById('hint3').classList.toggle('show')">Mostrar Pista</span>
+                </div>
+
+                <!-- Ejercicio 4 -->
+                <div class="exercise" id="ejercicio4">
+                    <div class="exercise-header">
+                        <h3>Ejercicio 4: Biblioteca con Menú Interactivo</h3>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+
+                    <div class="exercise-description">
+                        <strong>Objetivo:</strong> Crea un sistema completo de biblioteca con menú:
+                        <ul>
+                            <li>Clase <code>Libro</code> con: titulo, autor, prestado (boolean)</li>
+                            <li>Constructor, getters, setters y <code>prestar()</code> / <code>devolver()</code></li>
+                            <li>Clase <code>Biblioteca</code> con array de <code>Libro[]</code> (máximo 20 libros)</li>
+                            <li>Menú con JOptionPane que permita: 1) Agregar libro, 2) Listar libros, 3) Prestar libro, 4) Devolver libro, 5) Salir</li>
+                            <li>Usa un ciclo <code>while</code> con <code>switch</code> para el menú</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-editor">
+                        <textarea id="code4" placeholder="// Escribe tu código aquí
+import javax.swing.*;
+
+class Libro {
+    // Atributos privados
+
+    // Constructor
+
+    // Getters y setters
+
+    // Métodos prestar() y devolver()
+}
+
+class Biblioteca {
+    private Libro[] libros;
+    private int cantidad;
+
+    public Biblioteca() {
+        libros = new Libro[20];
+        cantidad = 0;
+    }
+
+    // Métodos CRUD
+
+    public void agregarLibro(Libro libro) { }
+
+    public String listarLibros() { }
+
+    public boolean prestarLibro(String titulo) { }
+
+    public boolean devolverLibro(String titulo) { }
+
+    // Menú interactivo
+    public void mostrarMenu() {
+        // Implementa el menú con while y switch
+    }
+}"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="verificarEjercicio4()">Verificar Código</button>
+                    <button class="btn btn-secondary" onclick="mostrarSolucion4()">Ver Solución</button>
+
+                    <div id="result4" class="result-box"></div>
+
+                    <div id="hint4" class="hint">
+                        <strong>💡 Pista:</strong><br>
+                        • En <code>prestar()</code>: verifica que no esté prestado antes de marcarlo<br>
+                        • El menú usa <code>Integer.parseInt(JOptionPane.showInputDialog(...))</code><br>
+                        • Para el ciclo: <code>while(opcion != 5)</code><br>
+                        • Usa <code>JOptionPane.showMessageDialog</code> para mostrar resultados
+                    </div>
+
+                    <span class="hint-toggle" onclick="document.getElementById('hint4').classList.toggle('show')">Mostrar Pista</span>
+                </div>
+
+                <!-- Ejercicio 5 -->
+                <div class="exercise" id="ejercicio5">
+                    <div class="exercise-header">
+                        <h3>Ejercicio 5: Caja Registradora</h3>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+
+                    <div class="exercise-description">
+                        <strong>Objetivo:</strong> Simula una caja registradora:
+                        <ul>
+                            <li>Enum <code>Producto</code> con: MANZANA(1.50), PAN(2.00), LECHE(3.50), HUEVOS(4.00)</li>
+                            <li>Clase <code>Carrito</code> con array de <code>double[] precios</code> y <code>int cantidad</code></li>
+                            <li>Método <code>agregarProducto(double precio)</code></li>
+                            <li>Método <code>calcularTotal()</code> que sume todos los precios</li>
+                            <li>Método <code>finalizarCompra()</code> que muestre el total con IVA (16%)</li>
+                        </ul>
+                    </div>
+
+                    <div class="code-editor">
+                        <textarea id="code5" placeholder="// Escribe tu código aquí
+import javax.swing.*;
+
+enum Producto {
+    MANZANA(1.50),
+    PAN(2.00),
+    LECHE(3.50),
+    HUEVOS(4.00);
+
+    private double precio;
+
+    Producto(double precio) {
+        this.precio = precio;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+}
+
+class Carrito {
+    private double[] precios;
+    private int cantidad;
+
+    public Carrito() {
+        precios = new double[50];
+        cantidad = 0;
+    }
+
+    // Completa los métodos
+}"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="verificarEjercicio5()">Verificar Código</button>
+                    <button class="btn btn-secondary" onclick="mostrarSolucion5()">Ver Solución</button>
+
+                    <div id="result5" class="result-box"></div>
+
+                    <div id="hint5" class="hint">
+                        <strong>💡 Pista:</strong><br>
+                        • <code>agregarProducto</code>: <code>precios[cantidad++] = precio;</code><br>
+                        • <code>calcularTotal</code>: acumula en un for hasta <code>cantidad</code><br>
+                        • <code>finalizarCompra</code>: total * 1.16 y muestra en JOptionPane
+                    </div>
+
+                    <span class="hint-toggle" onclick="document.getElementById('hint5').classList.toggle('show')">Mostrar Pista</span>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🎓 Guía de Programación Orientada a Objetos | 2026</p>
+            <p style="margin-top: 10px; opacity: 0.8;">
+                Creado para fines educativos
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Copiar código al hacer clic
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.style.cursor = 'pointer';
+            block.title = 'Haz clic para seleccionar el código';
+
+            block.addEventListener('click', function() {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(this);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            });
+        });
+
+        // ================== FUNCIONES DE VERIFICACIÓN DE EJERCICIOS ==================
+
+        function mostrarResultado(resultId, mensaje, esExito) {
+            const resultBox = document.getElementById(resultId);
+            resultBox.className = 'result-box ' + (esExito ? 'success' : 'error');
+            resultBox.innerHTML = esExito ? '✅ ' + mensaje : '❌ ' + mensaje;
+        }
+
+        function mostrarInfo(resultId, mensaje) {
+            const resultBox = document.getElementById(resultId);
+            resultBox.className = 'result-box info';
+            resultBox.innerHTML = 'ℹ️ ' + mensaje;
+        }
+
+        // Ejercicio 1
+        function verificarEjercicio1() {
+            const codigo = document.getElementById('code1').value;
+            const resultId = 'result1';
+
+            if (codigo.trim() === '') {
+                mostrarInfo(resultId, 'Por favor, escribe algún código antes de verificar.');
+                return;
+            }
+
+            const errores = [];
+            const requisitos = [
+                { regex: /private\s+String\s+nombre/, msg: 'Falta el atributo privado nombre' },
+                { regex: /private\s+double\s+nota/, msg: 'Falta el atributo privado nota' },
+                { regex: /public\s+Estudiante\s*\(/, msg: 'Falta el constructor' },
+                { regex: /public\s+String\s+getNombre\s*\(/, msg: 'Falta el getter getNombre()' },
+                { regex: /public\s+double\s+getNota\s*\(/, msg: 'Falta el getter getNota()' },
+                { regex: /public\s+void\s+setNota\s*\(/, msg: 'Falta el setter setNota()' },
+                { regex: /if\s*\([^)]*nota\s*>=\s*0[^)]*&&[^)]*nota\s*<=\s*10/, msg: 'El setter debe validar que la nota esté entre 0 y 10' },
+                { regex: /public\s+boolean\s+estaAprobado\s*\(/, msg: 'Falta el método estaAprobado()' },
+                { regex: /return\s+[^;]*nota\s*>=\s*6/, msg: 'estaAprobado() debe retornar si nota >= 6' }
+            ];
+
+            requisitos.forEach(req => {
+                if (!req.regex.test(codigo)) {
+                    errores.push(req.msg);
+                }
+            });
+
+            if (errores.length === 0) {
+                mostrarResultado(resultId, '¡Excelente! Tu implementación de la clase Estudiante es correcta. ✨', true);
+            } else {
+                mostrarResultado(resultId, 'Aún hay elementos por corregir:\n• ' + errores.join('\n• '), false);
+            }
+        }
+
+        function mostrarSolucion1() {
+            const solucion = `// SOLUCIÓN COMPLETA - Ejercicio 1
+public class Estudiante {
+    // Atributos privados
+    private String nombre;
+    private double nota;
+
+    // Constructor
+    public Estudiante(String nombre, double nota) {
+        this.nombre = nombre;
+        this.nota = nota;
+    }
+
+    // Getters
+    public String getNombre() {
+        return nombre;
+    }
+
+    public double getNota() {
+        return nota;
+    }
+
+    // Setter con validación
+    public void setNota(double nota) {
+        if (nota >= 0 && nota <= 10) {
+            this.nota = nota;
+        } else {
+            System.out.println("Error: La nota debe estar entre 0 y 10");
+        }
+    }
+
+    // Método para verificar si está aprobado
+    public boolean estaAprobado() {
+        return this.nota >= 6;
+    }
+}`;
+            document.getElementById('code1').value = solucion;
+            mostrarInfo('result1', 'Solución cargada. Estúdiala y luego intenta escribirla tú mismo.');
+        }
+
+        // Ejercicio 2
+        function verificarEjercicio2() {
+            const codigo = document.getElementById('code2').value;
+            const resultId = 'result2';
+
+            if (codigo.trim() === '') {
+                mostrarInfo(resultId, 'Por favor, escribe algún código antes de verificar.');
+                return;
+            }
+
+            const errores = [];
+            const requisitos = [
+                { regex: /public\s+void\s+agregarProducto\s*\([^)]*String/, msg: 'Falta el método agregarProducto' },
+                { regex: /if\s*\([^)]*cantidad\s*<\s*10/, msg: 'Debes verificar que haya espacio (< 10)' },
+                { regex: /productos\[cantidad\+\+\]\s*=\s*nombre/, msg: 'Debes asignar el producto al array' },
+                { regex: /public\s+void\s+listarProductos\s*\(/, msg: 'Falta el método listarProductos' },
+                { regex: /for\s*\([^)]*int\s+\w+\s*=\s*0[^)]*\w+\s*<\s*cantidad/, msg: 'El for debe recorrer hasta cantidad' },
+                { regex: /JOptionPane\.showMessageDialog/, msg: 'Debes usar JOptionPane para mostrar los productos' },
+                { regex: /public\s+void\s+actualizarProducto\s*\([^)]*int/, msg: 'Falta el método actualizarProducto' },
+                { regex: /public\s+void\s+eliminarProducto\s*\([^)]*int/, msg: 'Falta el método eliminarProducto' }
+            ];
+
+            requisitos.forEach(req => {
+                if (!req.regex.test(codigo)) {
+                    errores.push(req.msg);
+                }
+            });
+
+            if (errores.length === 0) {
+                mostrarResultado(resultId, '¡Muy bien! Tu implementación del Gestor de Productos es correcta. 🎉', true);
+            } else {
+                mostrarResultado(resultId, 'Revisa lo siguiente:\n• ' + errores.join('\n• '), false);
+            }
+        }
+
+        function mostrarSolucion2() {
+            const solucion = `// SOLUCIÓN COMPLETA - Ejercicio 2
+import javax.swing.*;
+
+public class GestorProductos {
+    private String[] productos;
+    private int cantidad;
+
+    public GestorProductos() {
+        productos = new String[10];
+        cantidad = 0;
+    }
+
+    // CREATE - Agregar producto
+    public void agregarProducto(String nombre) {
+        if (cantidad < 10) {
+            productos[cantidad++] = nombre;
+            JOptionPane.showMessageDialog(null, "Producto agregado: " + nombre);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay espacio para más productos");
+        }
+    }
+
+    // READ - Listar productos
+    public void listarProductos() {
+        if (cantidad == 0) {
+            JOptionPane.showMessageDialog(null, "No hay productos registrados");
+            return;
+        }
+
+        String lista = "=== LISTA DE PRODUCTOS ===\\n";
+        for (int i = 0; i < cantidad; i++) {
+            lista += (i + 1) + ". " + productos[i] + "\\n";
+        }
+        JOptionPane.showMessageDialog(null, lista);
+    }
+
+    // UPDATE - Actualizar producto
+    public void actualizarProducto(int indice, String nuevoNombre) {
+        if (indice >= 0 && indice < cantidad) {
+            productos[indice] = nuevoNombre;
+            JOptionPane.showMessageDialog(null, "Producto actualizado");
+        } else {
+            JOptionPane.showMessageDialog(null, "Índice no válido");
+        }
+    }
+
+    // DELETE - Eliminar producto
+    public void eliminarProducto(int indice) {
+        if (indice >= 0 && indice < cantidad) {
+            // Mover los elementos una posición atrás
+            for (int i = indice; i < cantidad - 1; i++) {
+                productos[i] = productos[i + 1];
+            }
+            productos[--cantidad] = null;
+            JOptionPane.showMessageDialog(null, "Producto eliminado");
+        } else {
+            JOptionPane.showMessageDialog(null, "Índice no válido");
+        }
+    }
+}`;
+            document.getElementById('code2').value = solucion;
+            mostrarInfo('result2', 'Solución cargada. Analiza cómo se implementan las 4 operaciones CRUD.');
+        }
+
+        // Ejercicio 3
+        function verificarEjercicio3() {
+            const codigo = document.getElementById('code3').value;
+            const resultId = 'result3';
+
+            if (codigo.trim() === '') {
+                mostrarInfo(resultId, 'Por favor, escribe algún código antes de verificar.');
+                return;
+            }
+
+            const errores = [];
+            const requisitos = [
+                { regex: /enum\s+Candidato/, msg: 'Falta definir el enum Candidato' },
+                { regex: /JUAN\s*,\s*MARIA\s*,\s*CARLOS\s*,\s*ANA\s*,\s*BLANCO/, msg: 'El enum debe tener los 5 candidatos' },
+                { regex: /class\s+Voto\s*{/, msg: 'Falta la clase Voto' },
+                { regex: /private\s+Candidato\s+\w+/, msg: 'Voto debe tener un atributo privado de tipo Candidato' },
+                { regex: /public\s+Voto\s*\([^)]*Candidato/, msg: 'Falta el constructor de Voto' },
+                { regex: /public\s+Candidato\s+getCandidato\s*\(/, msg: 'Falta el getter en Voto' },
+                { regex: /class\s+SistemaVotacion/, msg: 'Falta la clase SistemaVotacion' },
+                { regex: /private\s+Voto\[\]\s*\w+/, msg: 'SistemaVotacion debe tener un array de Voto' },
+                { regex: /registrarVoto\s*\([^)]*Candidato/, msg: 'Falta el método registrarVoto' },
+                { regex: /contarVotos\s*\([^)]*Candidato/, msg: 'Falta el método contarVotos' }
+            ];
+
+            requisitos.forEach(req => {
+                if (!req.regex.test(codigo)) {
+                    errores.push(req.msg);
+                }
+            });
+
+            if (errores.length === 0) {
+                mostrarResultado(resultId, '¡Perfecto! Tu sistema de votación está bien implementado. 🗳️', true);
+            } else {
+                mostrarResultado(resultId, 'Corrige estos puntos:\n• ' + errores.join('\n• '), false);
+            }
+        }
+
+        function mostrarSolucion3() {
+            const solucion = `// SOLUCIÓN COMPLETA - Ejercicio 3
+
+// Enum con los candidatos
+enum Candidato {
+    JUAN, MARIA, CARLOS, ANA, BLANCO
+}
+
+// Clase para representar un voto
+class Voto {
+    private Candidato candidato;
+
+    public Voto(Candidato candidato) {
+        this.candidato = candidato;
+    }
+
+    public Candidato getCandidato() {
+        return candidato;
+    }
+}
+
+// Sistema de votación
+class SistemaVotacion {
+    private Voto[] votos;
+    private int totalVotos;
+
+    public SistemaVotacion() {
+        votos = new Voto[100];
+        totalVotos = 0;
+    }
+
+    // CREATE - Registrar un voto
+    public void registrarVoto(Candidato c) {
+        if (totalVotos < 100) {
+            votos[totalVotos++] = new Voto(c);
+            System.out.println("Voto registrado para: " + c);
+        } else {
+            System.out.println("No se pueden registrar más votos");
+        }
+    }
+
+    // READ - Contar votos de un candidato
+    public int contarVotos(Candidato c) {
+        int contador = 0;
+        for (int i = 0; i < totalVotos; i++) {
+            if (votos[i].getCandidato() == c) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    // Método adicional: mostrar resultados
+    public void mostrarResultados() {
+        System.out.println("=== RESULTADOS DE LA VOTACIÓN ===");
+        for (Candidato c : Candidato.values()) {
+            System.out.println(c + ": " + contarVotos(c) + " votos");
+        }
+    }
+}`;
+            document.getElementById('code3').value = solucion;
+            mostrarInfo('result3', 'Solución cargada. Observa cómo se usa el enum junto con las clases.');
+        }
+
+        // Ejercicio 4
+        function verificarEjercicio4() {
+            const codigo = document.getElementById('code4').value;
+            const resultId = 'result4';
+
+            if (codigo.trim() === '') {
+                mostrarInfo(resultId, 'Por favor, escribe algún código antes de verificar.');
+                return;
+            }
+
+            const errores = [];
+            const requisitos = [
+                { regex: /class\s+Libro/, msg: 'Falta la clase Libro' },
+                { regex: /private\s+boolean\s+prestado/, msg: 'Libro debe tener el atributo prestado' },
+                { regex: /prestar\s*\([^)]*\)/, msg: 'Falta el método prestar()' },
+                { regex: /devolver\s*\([^)]*\)/, msg: 'Falta el método devolver()' },
+                { regex: /class\s+Biblioteca/, msg: 'Falta la clase Biblioteca' },
+                { regex: /private\s+Libro\[\]\s*\w+/, msg: 'Biblioteca debe tener un array de Libro' },
+                { regex: /while\s*\([^)]*opcion\s*!=\s*5/, msg: 'El menú debe usar un while con opción != 5' },
+                { regex: /switch\s*\([^)]*opcion/, msg: 'Debes usar un switch para el menú' }
+            ];
+
+            requisitos.forEach(req => {
+                if (!req.regex.test(codigo)) {
+                    errores.push(req.msg);
+                }
+            });
+
+            if (errores.length === 0) {
+                mostrarResultado(resultId, '¡Excelente trabajo! El sistema de biblioteca está completo. 📚', true);
+            } else {
+                mostrarResultado(resultId, 'Sigue trabajando en:\n• ' + errores.join('\n• '), false);
+            }
+        }
+
+        function mostrarSolucion4() {
+            const solucion = `// SOLUCIÓN COMPLETA - Ejercicio 4
+import javax.swing.*;
+
+// Clase Libro
+class Libro {
+    private String titulo;
+    private String autor;
+    private boolean prestado;
+
+    public Libro(String titulo, String autor) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.prestado = false;
+    }
+
+    // Getters
+    public String getTitulo() { return titulo; }
+    public String getAutor() { return autor; }
+    public boolean estaPrestado() { return prestado; }
+
+    // Métodos para prestar y devolver
+    public boolean prestar() {
+        if (!prestado) {
+            prestado = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void devolver() {
+        prestado = false;
+    }
+
+    @Override
+    public String toString() {
+        return titulo + " - " + autor + (prestado ? " [PRESTADO]" : " [DISPONIBLE]");
+    }
+}
+
+// Clase Biblioteca
+class Biblioteca {
+    private Libro[] libros;
+    private int cantidad;
+
+    public Biblioteca() {
+        libros = new Libro[20];
+        cantidad = 0;
+    }
+
+    // CREATE - Agregar libro
+    public void agregarLibro(Libro libro) {
+        if (cantidad < 20) {
+            libros[cantidad++] = libro;
+        } else {
+            JOptionPane.showMessageDialog(null, "Biblioteca llena");
+        }
+    }
+
+    // READ - Listar libros
+    public String listarLibros() {
+        if (cantidad == 0) return "No hay libros en la biblioteca";
+
+        String lista = "=== LIBROS EN BIBLIOTECA ===\\n";
+        for (int i = 0; i < cantidad; i++) {
+            lista += (i + 1) + ". " + libros[i].toString() + "\\n";
+        }
+        return lista;
+    }
+
+    // UPDATE - Prestar libro
+    public boolean prestarLibro(String titulo) {
+        for (int i = 0; i < cantidad; i++) {
+            if (libros[i].getTitulo().equalsIgnoreCase(titulo)) {
+                if (libros[i].prestar()) {
+                    return true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "El libro ya está prestado");
+                    return false;
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Libro no encontrado");
+        return false;
+    }
+
+    // DELETE - Devolver libro
+    public boolean devolverLibro(String titulo) {
+        for (int i = 0; i < cantidad; i++) {
+            if (libros[i].getTitulo().equalsIgnoreCase(titulo)) {
+                libros[i].devolver();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Menú interactivo
+    public void mostrarMenu() {
+        int opcion = 0;
+
+        while (opcion != 5) {
+            String menu = "=== BIBLIOTECA ===\\n" +
+                         "1. Agregar libro\\n" +
+                         "2. Listar libros\\n" +
+                         "3. Prestar libro\\n" +
+                         "4. Devolver libro\\n" +
+                         "5. Salir";
+
+            String input = JOptionPane.showInputDialog(menu);
+            if (input == null) break;
+
+            opcion = Integer.parseInt(input);
+
+            switch (opcion) {
+                case 1:
+                    String titulo = JOptionPane.showInputDialog("Título del libro:");
+                    String autor = JOptionPane.showInputDialog("Autor del libro:");
+                    agregarLibro(new Libro(titulo, autor));
+                    JOptionPane.showMessageDialog(null, "Libro agregado");
+                    break;
+
+                case 2:
+                    JOptionPane.showMessageDialog(null, listarLibros());
+                    break;
+
+                case 3:
+                    String tituloPrestar = JOptionPane.showInputDialog("Título del libro a prestar:");
+                    prestarLibro(tituloPrestar);
+                    break;
+
+                case 4:
+                    String tituloDevolver = JOptionPane.showInputDialog("Título del libro a devolver:");
+                    devolverLibro(tituloDevolver);
+                    break;
+
+                case 5:
+                    JOptionPane.showMessageDialog(null, "¡Hasta luego!");
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción no válida");
+            }
+        }
+    }
+}`;
+            document.getElementById('code4').value = solucion;
+            mostrarInfo('result4', 'Solución cargada. Este es un ejemplo completo de POO aplicado con menú interactivo.');
+        }
+
+        // Ejercicio 5
+        function verificarEjercicio5() {
+            const codigo = document.getElementById('code5').value;
+            const resultId = 'result5';
+
+            if (codigo.trim() === '') {
+                mostrarInfo(resultId, 'Por favor, escribe algún código antes de verificar.');
+                return;
+            }
+
+            const errores = [];
+            const requisitos = [
+                { regex: /enum\s+Producto/, msg: 'Falta el enum Producto' },
+                { regex: /class\s+Carrito/, msg: 'Falta la clase Carrito' },
+                { regex: /private\s+double\[\]\s*\w+/, msg: 'Carrito debe tener un array de double' },
+                { regex: /agregarProducto\s*\([^)]*double/, msg: 'Falta el método agregarProducto' },
+                { regex: /calcularTotal\s*\([^)]*\)/, msg: 'Falta el método calcularTotal' },
+                { regex: /finalizarCompra\s*\([^)]*\)/, msg: 'Falta el método finalizarCompra' },
+                { regex: /\*\s*1\.16|\*\s*0\.16/, msg: 'Debes calcular el IVA (16%) en finalizarCompra' },
+                { regex: /JOptionPane\.showMessageDialog/, msg: 'Usa JOptionPane para mostrar el total' }
+            ];
+
+            requisitos.forEach(req => {
+                if (!req.regex.test(codigo)) {
+                    errores.push(req.msg);
+                }
+            });
+
+            if (errores.length === 0) {
+                mostrarResultado(resultId, '¡Perfecto! Tu caja registradora funciona correctamente. 🛒', true);
+            } else {
+                mostrarResultado(resultId, 'Revisa estos aspectos:\n• ' + errores.join('\n• '), false);
+            }
+        }
+
+        function mostrarSolucion5() {
+            const solucion = `// SOLUCIÓN COMPLETA - Ejercicio 5
+import javax.swing.*;
+
+// Enum de productos con precios
+enum Producto {
+    MANZANA(1.50),
+    PAN(2.00),
+    LECHE(3.50),
+    HUEVOS(4.00);
+
+    private double precio;
+
+    Producto(double precio) {
+        this.precio = precio;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+}
+
+// Clase Carrito de compras
+class Carrito {
+    private double[] precios;
+    private int cantidad;
+
+    public Carrito() {
+        precios = new double[50];
+        cantidad = 0;
+    }
+
+    // CREATE - Agregar producto al carrito
+    public void agregarProducto(double precio) {
+        if (cantidad < 50) {
+            precios[cantidad++] = precio;
+            System.out.println("Producto agregado: $" + precio);
+        } else {
+            System.out.println("Carrito lleno");
+        }
+    }
+
+    // READ - Calcular total sin IVA
+    public double calcularTotal() {
+        double total = 0;
+        for (int i = 0; i < cantidad; i++) {
+            total += precios[i];
+        }
+        return total;
+    }
+
+    // Método para finalizar compra con IVA
+    public void finalizarCompra() {
+        double subtotal = calcularTotal();
+        double iva = subtotal * 0.16;
+        double total = subtotal + iva;
+
+        String detalle = "=== TICKET DE COMPRA ===\\n" +
+                        "Subtotal: $" + String.format("%.2f", subtotal) + "\\n" +
+                        "IVA (16%): $" + String.format("%.2f", iva) + "\\n" +
+                        "TOTAL: $" + String.format("%.2f", total);
+
+        JOptionPane.showMessageDialog(null, detalle);
+    }
+}`;
+            document.getElementById('code5').value = solucion;
+            mostrarInfo('result5', 'Solución cargada. Observa cómo se combina enum con arrays para crear un sistema de compras.');
+        }
+    </script>
+</body>
+</html>
